@@ -825,6 +825,109 @@ button {
     transform: translateY(0);
 }
 
+/* ---------- Top Destinations Styles ---------- */
+.top-destinations {
+    padding: 8rem 0;
+    background-color: var(--white);
+}
+
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 3rem;
+}
+
+.destination-card {
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.destination-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.destination-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.destination-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.destination-card:hover .destination-image img {
+    transform: scale(1.1);
+}
+
+.destination-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.destination-card:hover .destination-overlay {
+    opacity: 1;
+}
+
+.btn-light {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.btn-light:hover {
+    background-color: var(--white);
+}
+
+.btn-sm {
+    padding: 0.5rem 1.2rem;
+    font-size: 1.4rem;
+}
+
+.destination-content {
+    padding: 2rem;
+}
+
+.destination-content h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.destination-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-medium);
+    font-size: 1.4rem;
+}
+
+.destination-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.destination-meta i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+}
+
 /* ---------- Responsive Design ---------- */
 @media (max-width: 1200px) {
     html {
