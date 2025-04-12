@@ -1,8 +1,49 @@
 /* Custom CSS for Travel Budget Planner */
 
-/* Add smooth scrolling to the whole page */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
+
+/* Root variables for consistent theming */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1e40af;
+    --primary-light: #dbeafe;
+    --primary-dark: #1e3a8a;
+    --secondary-color: #0ea5e9;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --info-color: #6366f1;
+    --gray-color: #64748b;
+    --gray-light: #f1f5f9;
+    --gray-dark: #1e293b;
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --border-radius: 0.5rem;
+    --border-radius-lg: 0.75rem;
+    --border-radius-full: 9999px;
+    --font-family: 'Inter', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+}
+
+/* Global styles */
 html {
     scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--gray-dark);
+    background-color: #f8fafc;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
 }
 
 /* Custom scrollbar */
@@ -12,17 +53,17 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #f1f5f9;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: #cbd5e1;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1a1;
+    background: #94a3b8;
 }
 
 /* Animations */
@@ -46,80 +87,147 @@ html {
     display: inline-flex;
     align-items: center;
     padding: 0.25rem 0.5rem;
-    border-radius: 9999px;
+    border-radius: var(--border-radius-full);
     font-size: 0.75rem;
     font-weight: 500;
+    box-shadow: var(--shadow-sm);
 }
 
 .category-accommodation {
-    background-color: #E3F2FD;
-    color: #1E88E5;
+    background-color: #dbeafe;
+    color: #1e40af;
 }
 
 .category-food {
-    background-color: #FFF8E1;
-    color: #FFB300;
+    background-color: #fef3c7;
+    color: #b45309;
 }
 
 .category-transportation {
-    background-color: #E8F5E9;
-    color: #43A047;
+    background-color: #d1fae5;
+    color: #065f46;
 }
 
 .category-activities {
-    background-color: #F3E5F5;
-    color: #8E24AA;
+    background-color: #ede9fe;
+    color: #5b21b6;
 }
 
 .category-shopping {
-    background-color: #FFEBEE;
-    color: #E53935;
+    background-color: #fee2e2;
+    color: #b91c1c;
 }
 
 .category-other {
-    background-color: #ECEFF1;
-    color: #546E7A;
+    background-color: #f1f5f9;
+    color: #475569;
 }
 
-/* Trip card hover effects */
+/* Trip card styles */
 .trip-card {
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e2e8f0;
 }
 
 .trip-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-lg);
 }
 
-/* Custom focus styles */
-input:focus, select:focus, button:focus {
+/* Custom form elements */
+input, select, textarea, button {
+    font-family: var(--font-family);
+}
+
+input:focus, select:focus, textarea:focus, button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+    border-color: var(--primary-color) !important;
 }
 
-/* Expense item hover effect */
+input, select, textarea {
+    border-radius: var(--border-radius);
+    padding: 0.625rem;
+    border: 1px solid #cbd5e1;
+    transition: var(--transition-fast);
+    width: 100%;
+    font-size: 0.9375rem;
+}
+
+/* Custom buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    transition: var(--transition-fast);
+    cursor: pointer;
+    font-size: 0.9375rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--gray-dark);
+    border: 1px solid #cbd5e1;
+}
+
+.btn-outline:hover {
+    background-color: #f1f5f9;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}
+
+/* Expense item styles */
 .expense-item {
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
+    border-radius: var(--border-radius);
+    border: 1px solid #e2e8f0;
+    background-color: white;
 }
 
 .expense-item:hover {
-    background-color: #f9fafb;
+    box-shadow: var(--shadow-md);
+    border-color: #cbd5e1;
 }
 
 /* Button hover effects */
 .btn-hover-scale {
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-hover-scale:hover {
     transform: scale(1.05);
+    box-shadow: var(--shadow-md);
 }
 
 /* Date range display */
 .date-range {
     display: inline-flex;
     align-items: center;
-    color: #78909C;
+    color: var(--gray-color);
     font-size: 0.875rem;
 }
 
@@ -138,10 +246,25 @@ input:focus, select:focus, button:focus {
 
 .currency-symbol {
     position: absolute;
-    left: 0.5rem;
+    left: 0.75rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #78909C;
+    color: var(--gray-color);
+}
+
+/* Progress bar styles */
+.progress-container {
+    width: 100%;
+    background-color: #e2e8f0;
+    border-radius: var(--border-radius-full);
+    height: 0.5rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    border-radius: var(--border-radius-full);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Progress bar animation */
@@ -152,4 +275,42 @@ input:focus, select:focus, button:focus {
 
 .animate-progress {
     animation: progressFill 1s ease-out forwards;
+}
+
+/* Card and section styles */
+.card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-footer {
+    padding: 1.25rem;
+    border-top: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+}
+
+/* Header styling */
+.app-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+/* Footer styling */
+.app-footer {
+    background-color: var(--gray-dark);
+    color: #e2e8f0;
 }
