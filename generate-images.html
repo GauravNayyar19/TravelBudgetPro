@@ -3,204 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Placeholder Images</title>
+    <title>Generate Destination Images</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .image-container {
-            margin-bottom: 20px;
-            text-align: center;
         }
         canvas {
             border: 1px solid #ddd;
+            margin-bottom: 20px;
             max-width: 100%;
-            height: auto;
-        }
-        h2 {
-            margin-top: 40px;
         }
         button {
-            background-color: #4CAF50;
-            color: white;
             padding: 10px 15px;
+            background-color: #ff5722;
+            color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #e64a19;
         }
-        .download-all {
-            display: block;
-            margin: 20px auto;
+        .controls {
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <h1>Image Generator for TravelEase Website</h1>
-    <p>This page generates placeholder images for the TravelEase travel planner website. Click on individual buttons to download images or use the "Download All" button at the bottom.</p>
+    <h1>Destination Image Generator</h1>
+    <p>Click the buttons below to generate and download placeholder images for your destinations.</p>
     
-    <h2>Hero Carousel Images</h2>
-    <div class="gallery" id="hero-images">
-        <!-- Hero images will be generated here -->
+    <div class="controls">
+        <button id="createAllBtn">Generate All Images</button>
     </div>
     
-    <h2>Package Images</h2>
-    <div class="gallery" id="package-images">
-        <!-- Package images will be generated here -->
-    </div>
+    <h2>Bali, Indonesia</h2>
+    <canvas id="baliCanvas" width="600" height="400"></canvas>
+    <button id="baliBtn">Download Bali Image</button>
     
-    <h2>Testimonial Images</h2>
-    <div class="gallery" id="testimonial-images">
-        <!-- Testimonial images will be generated here -->
-    </div>
+    <h2>Paris, France</h2>
+    <canvas id="parisCanvas" width="600" height="400"></canvas>
+    <button id="parisBtn">Download Paris Image</button>
     
-    <button class="download-all" id="download-all">Download All Images</button>
+    <h2>Kyoto, Japan</h2>
+    <canvas id="kyotoCanvas" width="600" height="400"></canvas>
+    <button id="kyotoBtn">Download Kyoto Image</button>
+    
+    <h2>Santorini, Greece</h2>
+    <canvas id="santoriniCanvas" width="600" height="400"></canvas>
+    <button id="santoriniBtn">Download Santorini Image</button>
     
     <script>
-        // Define locations for hero images
-        const heroLocations = [
-            { name: "Mountain Landscape", color: "#3498db", icon: "🏔️" },
-            { name: "Beach Sunset", color: "#e67e22", icon: "🏖️" },
-            { name: "City Skyline", color: "#34495e", icon: "🏙️" },
-            { name: "Tropical Island", color: "#27ae60", icon: "🌴" }
-        ];
-        
-        // Define destinations for package images
-        const packageDestinations = [
-            { name: "Bali Paradise", color: "#1abc9c", icon: "🌺" },
-            { name: "Paris Explorer", color: "#9b59b6", icon: "🗼" },
-            { name: "Japanese Adventure", color: "#e74c3c", icon: "🏯" },
-            { name: "Greek Island Hopping", color: "#3498db", icon: "🏛️" },
-            { name: "African Safari", color: "#f39c12", icon: "🦁" },
-            { name: "New York City Break", color: "#34495e", icon: "🗽" }
-        ];
-        
-        // Function to create a canvas placeholder image
-        function createPlaceholderImage(width, height, bgColor, text, icon = null, fontSize = 30) {
-            const canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to create a destination image
+            function createDestinationImage(canvasId, title, gradient1, gradient2) {
+                const canvas = document.getElementById(canvasId);
+                const ctx = canvas.getContext('2d');
+                
+                // Create gradient background
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                gradient.addColorStop(0, gradient1);
+                gradient.addColorStop(1, gradient2);
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add some pattern/texture
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                for (let i = 0; i < canvas.width; i += 20) {
+                    for (let j = 0; j < canvas.height; j += 20) {
+                        if ((i + j) % 40 === 0) {
+                            ctx.fillRect(i, j, 10, 10);
+                        }
+                    }
+                }
+                
+                // Add destination title
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 36px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 2;
+                ctx.shadowOffsetY = 2;
+                ctx.fillText(title, canvas.width / 2, canvas.height / 2);
+                
+                // Add travel icon or symbol
+                ctx.font = '48px Arial';
+                ctx.fillText('✈️', canvas.width / 2, canvas.height / 2 - 60);
+                
+                // Add decorative elements based on destination theme
+                addDestinationElements(ctx, title.toLowerCase(), canvas.width, canvas.height);
+            }
             
-            // Background
-            ctx.fillStyle = bgColor;
-            ctx.fillRect(0, 0, width, height);
-            
-            // Add a pattern
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-            for (let i = 0; i < width; i += 40) {
-                for (let j = 0; j < height; j += 40) {
-                    ctx.fillRect(i, j, 20, 20);
+            // Add specific elements based on destination
+            function addDestinationElements(ctx, destination, width, height) {
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+                
+                if (destination.includes('bali')) {
+                    // Palm trees for Bali
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                    ctx.beginPath();
+                    ctx.moveTo(50, height - 50);
+                    ctx.lineTo(70, height - 50);
+                    ctx.lineTo(60, height - 150);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(width - 50, height - 50);
+                    ctx.lineTo(width - 70, height - 50);
+                    ctx.lineTo(width - 60, height - 150);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                } else if (destination.includes('paris')) {
+                    // Eiffel Tower silhouette for Paris
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                    ctx.beginPath();
+                    ctx.moveTo(width / 2, 50);
+                    ctx.lineTo(width / 2 - 40, height - 50);
+                    ctx.lineTo(width / 2 + 40, height - 50);
+                    ctx.closePath();
+                    ctx.fill();
+                    
+                } else if (destination.includes('kyoto')) {
+                    // Torii gate for Kyoto
+                    ctx.fillStyle = 'rgba(220, 50, 50, 0.5)';
+                    ctx.fillRect(width / 2 - 50, height - 150, 10, 100);
+                    ctx.fillRect(width / 2 + 40, height - 150, 10, 100);
+                    ctx.fillRect(width / 2 - 60, height - 150, 120, 10);
+                    ctx.fillRect(width / 2 - 70, height - 130, 140, 10);
+                    
+                } else if (destination.includes('santorini')) {
+                    // White buildings with blue domes for Santorini
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fillRect(width / 2 - 70, height - 120, 140, 70);
+                    
+                    ctx.fillStyle = 'rgba(30, 100, 200, 0.8)';
+                    ctx.beginPath();
+                    ctx.arc(width / 2, height - 120, 30, Math.PI, 0, false);
+                    ctx.fill();
                 }
             }
             
-            // Text and icon
-            ctx.fillStyle = 'white';
-            ctx.textAlign = 'center';
-            ctx.font = `${fontSize}px Arial`;
-            
-            if (icon) {
-                ctx.font = `${fontSize * 2}px Arial`;
-                ctx.fillText(icon, width / 2, height / 2 - 30);
-                ctx.font = `${fontSize}px Arial`;
-                ctx.fillText(text, width / 2, height / 2 + 30);
-            } else {
-                ctx.fillText(text, width / 2, height / 2);
+            // Function to download a canvas as an image
+            function downloadCanvasImage(canvasId, filename) {
+                const canvas = document.getElementById(canvasId);
+                const image = canvas.toDataURL('image/jpeg', 0.9);
+                const link = document.createElement('a');
+                link.href = image;
+                link.download = filename;
+                link.click();
             }
             
-            return canvas;
-        }
-        
-        // Function to create download button for an image
-        function createDownloadButton(canvas, filename) {
-            const button = document.createElement('button');
-            button.textContent = `Download ${filename}`;
-            button.addEventListener('click', () => {
-                const link = document.createElement('a');
-                link.download = filename;
-                link.href = canvas.toDataURL('image/jpeg', 0.8);
-                link.click();
-            });
-            return button;
-        }
-        
-        // Generate hero images
-        const heroContainer = document.getElementById('hero-images');
-        const heroCanvases = [];
-        
-        heroLocations.forEach((location, index) => {
-            const container = document.createElement('div');
-            container.className = 'image-container';
-            
-            const canvas = createPlaceholderImage(1200, 800, location.color, location.name, location.icon, 36);
-            heroCanvases.push({ canvas, filename: `hero-${index + 1}.jpg` });
-            
-            container.appendChild(canvas);
-            container.appendChild(createDownloadButton(canvas, `hero-${index + 1}.jpg`));
-            heroContainer.appendChild(container);
-        });
-        
-        // Generate package images
-        const packageContainer = document.getElementById('package-images');
-        const packageCanvases = [];
-        
-        packageDestinations.forEach((destination, index) => {
-            const container = document.createElement('div');
-            container.className = 'image-container';
-            
-            const canvas = createPlaceholderImage(800, 500, destination.color, destination.name, destination.icon, 28);
-            packageCanvases.push({ canvas, filename: `package-${index + 1}.jpg` });
-            
-            container.appendChild(canvas);
-            container.appendChild(createDownloadButton(canvas, `package-${index + 1}.jpg`));
-            packageContainer.appendChild(container);
-        });
-        
-        // Generate testimonial images
-        const testimonialContainer = document.getElementById('testimonial-images');
-        const testimonialCanvases = [];
-        
-        const canvas = createPlaceholderImage(400, 400, '#8e44ad', 'Traveler', '😊', 28);
-        testimonialCanvases.push({ canvas, filename: 'testimonial-1.jpg' });
-        
-        const container = document.createElement('div');
-        container.className = 'image-container';
-        container.appendChild(canvas);
-        container.appendChild(createDownloadButton(canvas, 'testimonial-1.jpg'));
-        testimonialContainer.appendChild(container);
-        
-        // Download all button functionality
-        document.getElementById('download-all').addEventListener('click', () => {
-            const allCanvases = [...heroCanvases, ...packageCanvases, ...testimonialCanvases];
-            const zipLinks = allCanvases.map(({ canvas, filename }) => {
-                return {
-                    filename: filename,
-                    href: canvas.toDataURL('image/jpeg', 0.8)
-                };
+            // Generate and setup download for Bali image
+            createDestinationImage('baliCanvas', 'Bali, Indonesia', '#02aab0', '#00cdac');
+            document.getElementById('baliBtn').addEventListener('click', function() {
+                downloadCanvasImage('baliCanvas', 'destination-bali.jpg');
             });
             
-            // Since we can't create actual ZIP files in the browser without additional libraries,
-            // we'll just download them one by one with a slight delay
-            zipLinks.forEach((link, index) => {
-                setTimeout(() => {
-                    const a = document.createElement('a');
-                    a.download = link.filename;
-                    a.href = link.href;
-                    a.click();
-                }, index * 300);
+            // Generate and setup download for Paris image
+            createDestinationImage('parisCanvas', 'Paris, France', '#FF416C', '#FF4B2B');
+            document.getElementById('parisBtn').addEventListener('click', function() {
+                downloadCanvasImage('parisCanvas', 'destination-paris.jpg');
             });
             
-            alert(`Downloading ${zipLinks.length} images. Please check your downloads folder.`);
+            // Generate and setup download for Kyoto image
+            createDestinationImage('kyotoCanvas', 'Kyoto, Japan', '#8E2DE2', '#4A00E0');
+            document.getElementById('kyotoBtn').addEventListener('click', function() {
+                downloadCanvasImage('kyotoCanvas', 'destination-kyoto.jpg');
+            });
+            
+            // Generate and setup download for Santorini image
+            createDestinationImage('santoriniCanvas', 'Santorini, Greece', '#1A2980', '#26D0CE');
+            document.getElementById('santoriniBtn').addEventListener('click', function() {
+                downloadCanvasImage('santoriniCanvas', 'destination-santorini.jpg');
+            });
+            
+            // Setup button to create all images
+            document.getElementById('createAllBtn').addEventListener('click', function() {
+                downloadCanvasImage('baliCanvas', 'destination-bali.jpg');
+                downloadCanvasImage('parisCanvas', 'destination-paris.jpg');
+                downloadCanvasImage('kyotoCanvas', 'destination-kyoto.jpg');
+                downloadCanvasImage('santoriniCanvas', 'destination-santorini.jpg');
+            });
         });
     </script>
 </body>

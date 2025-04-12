@@ -1,105 +1,125 @@
-/* Custom CSS for Travel Budget Planner */
+/**
+ * TravelEase - Custom CSS
+ * Extra styling for enhanced visual effects
+ */
 
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
-
-/* Root variables for consistent theming */
-:root {
-    --primary-color: #2563eb;
-    --primary-hover: #1e40af;
-    --primary-light: #dbeafe;
-    --primary-dark: #1e3a8a;
-    --secondary-color: #0ea5e9;
-    --success-color: #10b981;
-    --warning-color: #f59e0b;
-    --danger-color: #ef4444;
-    --info-color: #6366f1;
-    --gray-color: #64748b;
-    --gray-light: #f1f5f9;
-    --gray-dark: #1e293b;
-    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-    --border-radius: 0.5rem;
-    --border-radius-lg: 0.75rem;
-    --border-radius-full: 9999px;
-    --font-family: 'Inter', sans-serif;
-    --font-heading: 'Poppins', sans-serif;
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.3s ease;
+/* Loading Animation Styles */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
 }
 
-/* Global styles */
-html {
-    scroll-behavior: smooth;
+.loading-spinner {
+    width: 5rem;
+    height: 5rem;
+    border: 0.5rem solid var(--primary-light);
+    border-top: 0.5rem solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 2rem;
 }
 
-body {
-    font-family: var(--font-family);
-    color: var(--gray-dark);
-    background-color: #f8fafc;
-    line-height: 1.5;
+.loading-overlay p {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    font-weight: 500;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Fade-in animation for page load */
-@keyframes fadeInPage {
+/* Error message styles */
+.error-message {
+    background-color: var(--error);
+    color: white;
+    padding: 1.2rem;
+    border-radius: var(--radius-md);
+    margin-top: 1.5rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Newsletter success message */
+.newsletter-success {
+    background-color: var(--success);
+    color: white;
+    padding: 1.2rem;
+    border-radius: var(--radius-md);
+    margin-top: 1.5rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Input error state */
+input.error, select.error {
+    border-color: var(--error) !important;
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Shake animation for error inputs */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+/* Enhanced hover effect for packages */
+.package.package-hover {
+    transform: translateY(-15px) !important;
+}
+
+/* Pulse animation for CTA buttons */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-md);
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.btn-primary:hover::after {
+    transform: scale(2);
+    opacity: 0;
+    animation: pulse 1s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0); opacity: 0.5; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+/* Enhanced page transitions */
+.page-transition {
+    animation: fadeSlideUp 0.5s ease;
+}
+
+@keyframes fadeSlideUp {
     from {
         opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-main {
-    animation: fadeInPage 0.4s ease-in-out;
-}
-
-/* Subtle hover transitions */
-a, button, input, select, textarea {
-    transition: all 0.2s ease-in-out;
-}
-
-/* Focus outline for better accessibility */
-*:focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-}
-
-/* Animations */
-.fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -107,396 +127,99 @@ a, button, input, select, textarea {
     }
 }
 
-/* Category colors and badges */
-.category-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--border-radius-full);
-    font-size: 0.75rem;
-    font-weight: 500;
-    box-shadow: var(--shadow-sm);
-}
-
-.category-accommodation {
-    background-color: #dbeafe;
-    color: #1e40af;
-}
-
-.category-food {
-    background-color: #fef3c7;
-    color: #b45309;
-}
-
-.category-transportation {
-    background-color: #d1fae5;
-    color: #065f46;
-}
-
-.category-activities {
-    background-color: #ede9fe;
-    color: #5b21b6;
-}
-
-.category-shopping {
-    background-color: #fee2e2;
-    color: #b91c1c;
-}
-
-.category-other {
-    background-color: #f1f5f9;
-    color: #475569;
-}
-
-/* Trip card styles */
-.trip-card {
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    background: white;
-    border: 1px solid #e2e8f0;
-}
-
-.trip-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Custom form elements */
-input, select, textarea, button {
-    font-family: var(--font-family);
-}
-
-input:focus, select:focus, textarea:focus, button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
-    border-color: var(--primary-color) !important;
-}
-
-input, select, textarea {
-    border-radius: var(--border-radius);
-    padding: 0.625rem;
-    border: 1px solid #cbd5e1;
-    transition: var(--transition-fast);
-    width: 100%;
-    font-size: 0.9375rem;
-}
-
-/* Custom buttons */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.625rem 1.25rem;
-    border-radius: var(--border-radius);
-    font-weight: 500;
-    transition: var(--transition-fast);
-    cursor: pointer;
-    font-size: 0.9375rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    opacity: 0;
-    transition: var(--transition-fast);
-}
-
-.btn:hover::after {
-    opacity: 1;
-}
-
-.btn:active {
-    transform: translateY(1px);
-}
-
-.btn-sm {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.8125rem;
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
-}
-
-.btn-primary:hover {
-    background-color: var(--primary-hover);
-    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
-}
-
-.btn-outline {
-    background-color: transparent;
-    color: var(--gray-dark);
-    border: 1px solid #cbd5e1;
-}
-
-.btn-outline:hover {
-    background-color: #f1f5f9;
-    border-color: #94a3b8;
-}
-
-.btn-danger {
-    background-color: var(--danger-color);
-    color: white;
-    border: none;
-}
-
-.btn-danger:hover {
-    background-color: #b91c1c;
-}
-
-.btn-success {
-    background-color: var(--success-color);
-    color: white;
-    border: none;
-    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
-}
-
-.btn-success:hover {
-    background-color: #059669;
-    box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
-}
-
-/* Expense item styles */
-.expense-item {
-    transition: all 0.2s ease;
-    position: relative;
-    border-bottom: 1px solid #f1f5f9;
-}
-
-.expense-item:hover {
-    background-color: #f8fafc;
-}
-
-.expense-item:last-child {
-    border-bottom: none;
-}
-
-/* Category colors for expense icons */
-.category-accommodation {
-    background-color: rgba(37, 99, 235, 0.1);
+/* Hover effect for destination cards */
+.destination-card:hover .destination-content h3 {
     color: var(--primary-color);
 }
 
-.category-food {
-    background-color: rgba(245, 158, 11, 0.1);
-    color: var(--warning-color);
+/* Staggered animation for grid items */
+.staggered-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-.category-transportation {
-    background-color: rgba(16, 185, 129, 0.1);
-    color: var(--success-color);
+/* Enhanced scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-.category-activities {
-    background-color: rgba(99, 102, 241, 0.1);
-    color: var(--info-color);
+::-webkit-scrollbar-track {
+    background-color: var(--light-bg);
 }
 
-.category-shopping {
-    background-color: rgba(239, 68, 68, 0.1);
-    color: var(--danger-color);
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
 }
 
-.category-other {
-    background-color: rgba(100, 116, 139, 0.1);
-    color: var(--gray-color);
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-dark);
 }
 
-/* Button hover effects */
-.btn-hover-scale {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-hover-scale:hover {
-    transform: scale(1.05);
-    box-shadow: var(--shadow-md);
-}
-
-/* Date range display */
-.date-range {
-    display: inline-flex;
-    align-items: center;
-    color: var(--gray-color);
-    font-size: 0.875rem;
-}
-
-.date-range svg {
-    margin: 0 0.25rem;
-}
-
-/* Currency symbol */
-.currency-display {
-    position: relative;
-}
-
-.currency-display input {
-    padding-left: 1.5rem;
-}
-
-.currency-symbol {
-    position: absolute;
-    left: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray-color);
-}
-
-/* Progress bar styles */
-.progress-container {
-    width: 100%;
-    background-color: #e2e8f0;
-    border-radius: var(--border-radius-full);
-    height: 0.5rem;
+/* Image hover zoom effect */
+.zoom-hover {
     overflow: hidden;
 }
 
-.progress-bar {
-    height: 100%;
-    border-radius: var(--border-radius-full);
-    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+.zoom-hover img {
+    transition: transform 0.5s ease;
 }
 
-/* Progress bar animation */
-@keyframes progressFill {
-    from { width: 0; }
-    to { width: var(--target-width); }
+.zoom-hover:hover img {
+    transform: scale(1.1);
 }
 
-.animate-progress {
-    animation: progressFill 1s ease-out forwards;
+/* Separator styles */
+.separator {
+    width: 5rem;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 1.5rem auto;
 }
 
-/* Card and section styles */
-.card {
-    background: white;
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid #e2e8f0;
-    overflow: hidden;
-}
-
-.card-header {
-    padding: 1.25rem;
-    border-bottom: 1px solid #e2e8f0;
-    background-color: #f8fafc;
-}
-
-.card-body {
-    padding: 1.25rem;
-}
-
-.card-footer {
-    padding: 1.25rem;
-    border-top: 1px solid #e2e8f0;
-    background-color: #f8fafc;
-}
-
-/* Header styling */
-.app-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+/* Badge styles */
+.badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 2rem;
     color: white;
-    box-shadow: var(--shadow-md);
+    margin-right: 0.5rem;
 }
 
-/* Footer styling */
-.app-footer {
-    background-color: var(--gray-dark);
-    color: #e2e8f0;
+.badge-primary {
+    background-color: var(--primary-color);
 }
 
-/* Text utility classes */
-.text-primary { color: var(--primary-color); }
-.text-secondary { color: var(--secondary-color); }
-.text-success { color: var(--success-color); }
-.text-danger { color: var(--danger-color); }
-.text-warning { color: var(--warning-color); }
-.text-info { color: var(--info-color); }
-.text-gray-custom { color: var(--gray-color); }
-.text-gray-dark { color: var(--gray-dark); }
-
-.bg-primary { background-color: var(--primary-color); }
-.bg-primary-light { background-color: var(--primary-light); }
-.bg-success { background-color: var(--success-color); }
-.bg-danger { background-color: var(--danger-color); }
-.bg-warning { background-color: var(--warning-color); }
-.bg-info { background-color: var(--info-color); }
-
-/* Border utility classes */
-.border-primary { border-color: var(--primary-color); }
-.border-success { border-color: var(--success-color); }
-.border-danger { border-color: var(--danger-color); }
-.border-warning { border-color: var(--warning-color); }
-
-/* Shadow effects */
-.hover-shadow-md {
-    transition: box-shadow var(--transition-fast);
+.badge-secondary {
+    background-color: var(--secondary-color);
 }
 
-.hover-shadow-md:hover {
-    box-shadow: var(--shadow-md);
+.badge-accent {
+    background-color: var(--accent-color);
+    color: var(--text-dark);
 }
 
-.font-heading {
-    font-family: var(--font-heading);
+/* Custom styling for banner content */
+.page-banner {
+    position: relative;
+    overflow: hidden;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .card {
-        border-radius: var(--border-radius);
-    }
-    
-    .app-header {
-        padding: 0.75rem 0;
-    }
-    
-    .btn {
-        padding: 0.5rem 1rem;
-    }
-    
-    .progress-container {
-        height: 0.375rem;
-    }
-    
-    .card-header, .card-body, .card-footer {
-        padding: 1rem;
-    }
-    
-    h2 {
-        font-size: 1.5rem;
-    }
-    
-    .text-2xl {
-        font-size: 1.35rem;
-    }
-    
-    /* Better spacing on mobile */
-    section {
-        margin-bottom: 1.5rem;
-    }
-    
-    .mb-8 {
-        margin-bottom: 1.5rem;
-    }
-    
-    /* Make inputs larger and easier to tap on mobile */
-    input, select, button {
-        min-height: 2.75rem;
-    }
-    
-    /* Improved touch targets */
-    .expense-item {
-        padding: 0.875rem;
-    }
+.page-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.8), rgba(var(--primary-dark-rgb), 0.8));
+    z-index: 1;
+}
+
+.banner-content {
+    position: relative;
+    z-index: 2;
 }

@@ -4,6 +4,11 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize CSS variables for dynamic styling
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color-rgb', '255, 87, 34'); // Matches #ff5722
+    root.style.setProperty('--primary-dark-rgb', '230, 74, 25');  // Matches #e64a19
+    
     // Initialize AOS (Animate On Scroll) if available
     if(typeof AOS !== 'undefined') {
         AOS.init({
@@ -207,6 +212,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check visibility on load and scroll
     checkVisibility();
     window.addEventListener('scroll', checkVisibility);
+    
+    // Destination cards hover effects
+    const destinationCards = document.querySelectorAll('.destination-card');
+    
+    destinationCards.forEach(function(card) {
+        card.addEventListener('mouseenter', function() {
+            const overlay = this.querySelector('.destination-overlay');
+            if (overlay) {
+                overlay.style.opacity = '1';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const overlay = this.querySelector('.destination-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+            }
+        });
+    });
 
     // Newsletter form submission
     const newsletterForm = document.querySelector('.newsletter-form');
