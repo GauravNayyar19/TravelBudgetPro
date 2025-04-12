@@ -3,478 +3,416 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelBudget - Plan Your Adventure</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Feather Icons -->
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <title>TravelEase - Plan Your Dream Vacation</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/custom.css">
-    <!-- Tailwind Config -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#2563eb',
-                        'primary-hover': '#1e40af',
-                        'primary-light': '#dbeafe',
-                        'primary-dark': '#1e3a8a',
-                        'secondary': '#0ea5e9',
-                        'success': '#10b981',
-                        'warning': '#f59e0b',
-                        'danger': '#ef4444',
-                        'info': '#6366f1',
-                        'gray-custom': '#64748b',
-                        'gray-light': '#f1f5f9',
-                        'gray-dark': '#1e293b'
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'sans-serif'],
-                        'heading': ['Poppins', 'sans-serif']
-                    },
-                    boxShadow: {
-                        'card': '0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)',
-                        'card-hover': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05)'
-                    },
-                    borderRadius: {
-                        'xl': '0.75rem'
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-gray-light min-h-screen font-sans">
-    <!-- Header -->
-    <header class="app-header py-4 shadow-md">
-        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <div class="flex items-center">
-                <div class="bg-white p-2 rounded-full shadow-md mr-3">
-                    <i data-feather="map" class="h-6 w-6 text-primary"></i>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>TravelEase</span>
+                    </a>
                 </div>
-                <h1 class="text-2xl font-bold font-heading">TravelBudget</h1>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="index.html" class="active">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="recommendations.html">Recommendations</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <a href="profile.html" class="profile-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>My Profile</span>
+                    </a>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
-            <button id="new-trip-btn" class="btn btn-primary btn-hover-scale shadow-md">
-                <i data-feather="plus" class="h-4 w-4 mr-2"></i>
-                New Trip
-            </button>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- Trip List Section (visible when no trip is selected) -->
-        <section id="trip-list-section" class="mb-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                <div class="mb-4 md:mb-0">
-                    <h2 class="text-2xl font-bold font-heading text-gray-dark">Your Trips</h2>
-                    <p class="text-gray-custom text-sm mt-1">Manage and track your travel budgets</p>
+    <!-- Hero Carousel Section -->
+    <section class="hero-carousel">
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <div class="carousel-slide active">
+                    <img src="images/hero-1.jpg" alt="Scenic mountain landscape">
+                    <div class="overlay"></div>
                 </div>
-                <div class="flex space-x-2">
-                    <button id="sort-trips-btn" class="btn btn-outline flex items-center">
-                        <i data-feather="filter" class="h-4 w-4 mr-2"></i>
-                        <span class="text-sm">Sort</span>
-                    </button>
+                <div class="carousel-slide">
+                    <img src="images/hero-2.jpg" alt="Beautiful beach sunset">
+                    <div class="overlay"></div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="images/hero-3.jpg" alt="City skyline view">
+                    <div class="overlay"></div>
+                </div>
+                <div class="carousel-slide">
+                    <img src="images/hero-4.jpg" alt="Tropical island paradise">
+                    <div class="overlay"></div>
                 </div>
             </div>
-            
-            <div id="trips-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- No trips message -->
-                <div id="no-trips-message" class="col-span-full text-center py-12 card fade-in">
-                    <div class="inline-block p-4 bg-primary-light rounded-full mb-6">
-                        <i data-feather="map-pin" class="h-8 w-8 text-primary"></i>
-                    </div>
-                    <h3 class="text-xl font-medium font-heading text-gray-dark mb-3">No trips planned yet</h3>
-                    <p class="text-gray-custom mb-6 max-w-md mx-auto">Create your first trip to start planning your budget and tracking your expenses.</p>
-                    <button id="empty-new-trip-btn" class="btn btn-primary btn-hover-scale shadow-md mx-auto">
-                        <i data-feather="plus" class="h-4 w-4 mr-2"></i>
-                        Create Your First Trip
-                    </button>
-                </div>
-                
-                <!-- Trip cards will be added here dynamically -->
+            <div class="carousel-content">
+                <h1 class="site-title">TravelEase</h1>
+                <p class="tagline">Plan Your Dream Vacation With Ease</p>
+                <a href="#planner" class="btn btn-primary">Start Planning</a>
             </div>
-        </section>
+            <div class="carousel-controls">
+                <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-dots">
+                    <button class="dot active" data-slide="0"></button>
+                    <button class="dot" data-slide="1"></button>
+                    <button class="dot" data-slide="2"></button>
+                    <button class="dot" data-slide="3"></button>
+                </div>
+                <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
 
-        <!-- New Trip Form (initially hidden) -->
-        <section id="new-trip-section" class="card p-0 mb-8 hidden">
-            <div class="card-header flex justify-between items-center">
-                <h2 class="text-xl font-bold font-heading text-gray-dark">Plan a New Trip</h2>
-                <button id="close-new-trip-btn" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100">
-                    <i data-feather="x" class="h-5 w-5"></i>
-                </button>
+    <!-- Trip Planner Section -->
+    <section class="trip-planner" id="planner">
+        <div class="container">
+            <div class="section-header">
+                <h2>Plan Your Trip</h2>
+                <p>Customize your perfect getaway with our easy-to-use trip planner</p>
             </div>
-            
-            <form id="new-trip-form" class="card-body">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label for="trip-name" class="block text-sm font-medium text-gray-dark mb-2">Trip Name</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i data-feather="briefcase" class="h-4 w-4 text-gray-custom"></i>
-                            </div>
-                            <input type="text" id="trip-name" name="trip-name" placeholder="Summer Vacation in Italy" class="pl-10" required>
+            <div class="planner-form-container">
+                <form class="planner-form">
+                    <div class="form-group">
+                        <label for="destination">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Destination
+                        </label>
+                        <input type="text" id="destination" name="destination" placeholder="Where do you want to go?">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                Start Date
+                            </label>
+                            <input type="date" id="start-date" name="start-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">
+                                <i class="fas fa-calendar-alt"></i>
+                                End Date
+                            </label>
+                            <input type="date" id="end-date" name="end-date">
                         </div>
                     </div>
-                    
-                    <div>
-                        <label for="trip-destination" class="block text-sm font-medium text-gray-dark mb-2">Destination</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i data-feather="map-pin" class="h-4 w-4 text-gray-custom"></i>
-                            </div>
-                            <input type="text" id="trip-destination" name="trip-destination" placeholder="Rome, Italy" class="pl-10" required>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label for="trip-start-date" class="block text-sm font-medium text-gray-dark mb-2">Start Date</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i data-feather="calendar" class="h-4 w-4 text-gray-custom"></i>
-                            </div>
-                            <input type="date" id="trip-start-date" name="trip-start-date" class="pl-10" required>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label for="trip-end-date" class="block text-sm font-medium text-gray-dark mb-2">End Date</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i data-feather="calendar" class="h-4 w-4 text-gray-custom"></i>
-                            </div>
-                            <input type="date" id="trip-end-date" name="trip-end-date" class="pl-10" required>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label for="trip-currency" class="block text-sm font-medium text-gray-dark mb-2">Currency</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i data-feather="dollar-sign" class="h-4 w-4 text-gray-custom"></i>
-                            </div>
-                            <select id="trip-currency" name="trip-currency" class="pl-10" required>
-                                <option value="USD">USD ($)</option>
-                                <option value="EUR">EUR (€)</option>
-                                <option value="GBP">GBP (£)</option>
-                                <option value="JPY">JPY (¥)</option>
-                                <option value="CAD">CAD ($)</option>
-                                <option value="AUD">AUD ($)</option>
-                                <option value="INR">INR (₹)</option>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="travelers">
+                                <i class="fas fa-users"></i>
+                                Number of Travelers
+                            </label>
+                            <select id="travelers" name="travelers">
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5">5 People</option>
+                                <option value="6+">6+ People</option>
                             </select>
                         </div>
-                    </div>
-                    
-                    <div>
-                        <label for="trip-budget" class="block text-sm font-medium text-gray-dark mb-2">Total Budget</label>
-                        <div class="relative currency-display">
-                            <span class="currency-symbol" id="currency-symbol">$</span>
-                            <input type="number" id="trip-budget" name="trip-budget" placeholder="1000" min="1" required>
+                        <div class="form-group">
+                            <label for="budget">
+                                <i class="fas fa-coins"></i>
+                                Max Budget
+                            </label>
+                            <input type="number" id="budget" name="budget" placeholder="Your budget in USD">
                         </div>
                     </div>
-                </div>
-                
-                <div class="card-footer mt-6 flex justify-end space-x-3 p-0 bg-transparent border-0">
-                    <button type="button" id="cancel-new-trip-btn" class="btn btn-outline">Cancel</button>
-                    <button type="submit" class="btn btn-primary shadow-md">
-                        <i data-feather="check" class="h-4 w-4 mr-2"></i>
-                        Create Trip
+                    <button type="submit" class="btn btn-search">
+                        <i class="fas fa-search"></i>
+                        Find My Trip
                     </button>
-                </div>
-            </form>
-        </section>
+                </form>
+            </div>
+        </div>
+    </section>
 
-        <!-- Trip Details Section (initially hidden) -->
-        <section id="trip-details-section" class="hidden">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                <div class="flex items-center mb-4 md:mb-0">
-                    <button id="back-to-trips-btn" class="mr-3 text-gray-600 hover:text-gray-800 bg-white p-2 rounded-full shadow-sm hover:shadow-md transition-all">
-                        <i data-feather="arrow-left" class="h-5 w-5"></i>
-                    </button>
-                    <div>
-                        <h2 id="trip-details-title" class="text-2xl font-bold font-heading text-gray-dark">Trip Details</h2>
-                        <p id="trip-details-destination" class="text-gray-custom text-sm"></p>
-                    </div>
-                </div>
-                <div class="flex space-x-2">
-                    <button id="edit-trip-btn" class="btn btn-outline flex items-center">
-                        <i data-feather="edit-2" class="h-4 w-4 mr-2"></i>
-                        Edit
-                    </button>
-                    <button id="delete-trip-btn" class="btn btn-danger flex items-center">
-                        <i data-feather="trash-2" class="h-4 w-4 mr-2"></i>
-                        Delete
-                    </button>
-                </div>
+    <!-- Popular Packages Section -->
+    <section class="popular-packages">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Packages</h2>
+                <p>Discover our most popular travel packages and destinations</p>
             </div>
-            
-            <!-- Trip Summary -->
-            <div class="card mb-8">
-                <div class="p-6">
-                    <div class="flex items-center mb-5">
-                        <div class="bg-primary-light p-2 rounded-full mr-3">
-                            <i data-feather="calendar" class="h-5 w-5 text-primary"></i>
-                        </div>
-                        <div>
-                            <p class="text-sm text-gray-custom mb-1">Trip Dates</p>
-                            <p id="trip-date-range" class="font-medium"></p>
-                        </div>
-                        <div class="ml-auto">
-                            <span id="trip-status-badge" class="category-badge"></span>
-                        </div>
+            <div class="packages-container">
+                <div class="package" data-aos="fade-up" data-aos-delay="100">
+                    <div class="package-img">
+                        <img src="images/package-1.jpg" alt="Bali Paradise">
+                        <div class="package-price">$899</div>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
-                        <div class="p-5 bg-primary-light rounded-xl shadow-sm">
-                            <div class="flex items-center justify-between mb-3">
-                                <p class="text-sm text-gray-custom">Total Budget</p>
-                                <div class="bg-white p-1 rounded-full">
-                                    <i data-feather="dollar-sign" class="h-4 w-4 text-primary"></i>
-                                </div>
-                            </div>
-                            <p id="trip-total-budget" class="text-2xl font-bold text-primary">$1,000</p>
+                    <div class="package-content">
+                        <h3>Bali Paradise</h3>
+                        <div class="package-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5 (127 reviews)</span>
                         </div>
-                        <div class="p-5 bg-green-50 rounded-xl shadow-sm">
-                            <div class="flex items-center justify-between mb-3">
-                                <p class="text-sm text-gray-custom">Remaining</p>
-                                <div class="bg-white p-1 rounded-full">
-                                    <i data-feather="trending-up" class="h-4 w-4 text-success"></i>
-                                </div>
-                            </div>
-                            <p id="trip-remaining-budget" class="text-2xl font-bold text-success">$800</p>
+                        <p>Experience the ultimate tropical getaway with pristine beaches and lush landscapes.</p>
+                        <div class="package-features">
+                            <span><i class="fas fa-clock"></i> 7 Days</span>
+                            <span><i class="fas fa-user-friends"></i> 2 People</span>
+                            <span><i class="fas fa-hotel"></i> 4-Star Hotel</span>
                         </div>
-                        <div class="p-5 bg-orange-50 rounded-xl shadow-sm">
-                            <div class="flex items-center justify-between mb-3">
-                                <p class="text-sm text-gray-custom">Spent</p>
-                                <div class="bg-white p-1 rounded-full">
-                                    <i data-feather="credit-card" class="h-4 w-4 text-warning"></i>
-                                </div>
-                            </div>
-                            <p id="trip-spent-amount" class="text-2xl font-bold text-warning">$200</p>
-                        </div>
-                        <div class="p-5 bg-purple-50 rounded-xl shadow-sm">
-                            <div class="flex items-center justify-between mb-3">
-                                <p class="text-sm text-gray-custom">Daily Budget</p>
-                                <div class="bg-white p-1 rounded-full">
-                                    <i data-feather="calendar" class="h-4 w-4 text-info"></i>
-                                </div>
-                            </div>
-                            <p id="trip-daily-budget" class="text-2xl font-bold text-info">$100/day</p>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <p class="text-sm text-gray-custom">Budget Progress</p>
-                            <p class="text-sm font-medium" id="budget-percentage">20%</p>
-                        </div>
-                        <div class="progress-container">
-                            <div id="trip-budget-progress" class="progress-bar animate-progress bg-primary" style="width: 20%"></div>
-                        </div>
+                        <a href="#" class="btn btn-outline">View Details</a>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Budget Breakdown Chart -->
-            <div class="card mb-8">
-                <div class="card-header border-b border-gray-100">
-                    <h3 class="text-lg font-medium font-heading text-gray-dark">Expense Breakdown</h3>
-                </div>
-                <div class="card-body p-6">
-                    <div class="h-64">
-                        <canvas id="budget-chart"></canvas>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Expense Management -->
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-                <!-- Add Expense Form -->
-                <div class="lg:col-span-2 card p-0">
-                    <div class="card-header border-b border-gray-100">
-                        <h3 class="text-lg font-medium font-heading text-gray-dark">Add Expense</h3>
-                    </div>
-                    <form id="add-expense-form" class="card-body">
-                        <div class="space-y-5">
-                            <div>
-                                <label for="expense-name" class="block text-sm font-medium text-gray-dark mb-2">Description</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i data-feather="file-text" class="h-4 w-4 text-gray-custom"></i>
-                                    </div>
-                                    <input type="text" id="expense-name" name="expense-name" placeholder="Hotel reservation" class="pl-10" required>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label for="expense-category" class="block text-sm font-medium text-gray-dark mb-2">Category</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i data-feather="tag" class="h-4 w-4 text-gray-custom"></i>
-                                    </div>
-                                    <select id="expense-category" name="expense-category" class="pl-10" required>
-                                        <option value="accommodation">Accommodation</option>
-                                        <option value="food">Food & Drinks</option>
-                                        <option value="transportation">Transportation</option>
-                                        <option value="activities">Activities & Sightseeing</option>
-                                        <option value="shopping">Shopping</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label for="expense-amount" class="block text-sm font-medium text-gray-dark mb-2">Amount</label>
-                                <div class="relative currency-display">
-                                    <span class="currency-symbol" id="expense-currency-symbol">$</span>
-                                    <input type="number" id="expense-amount" name="expense-amount" placeholder="150.00" min="0.01" step="0.01" required>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label for="expense-date" class="block text-sm font-medium text-gray-dark mb-2">Date</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i data-feather="calendar" class="h-4 w-4 text-gray-custom"></i>
-                                    </div>
-                                    <input type="date" id="expense-date" name="expense-date" class="pl-10" required>
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary w-full shadow-md">
-                                <i data-feather="plus" class="h-4 w-4 mr-2"></i>
-                                Add Expense
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Expense List -->
-                <div class="lg:col-span-3 card p-0">
-                    <div class="card-header border-b border-gray-100 flex justify-between items-center">
-                        <h3 class="text-lg font-medium font-heading text-gray-dark">Expenses</h3>
-                        <div class="flex space-x-2">
-                            <div class="relative">
-                                <select id="expense-filter" class="pl-8 py-1 pr-2 text-sm border-gray-200">
-                                    <option value="all">All Categories</option>
-                                    <option value="accommodation">Accommodation</option>
-                                    <option value="food">Food & Drinks</option>
-                                    <option value="transportation">Transportation</option>
-                                    <option value="activities">Activities</option>
-                                    <option value="shopping">Shopping</option>
-                                    <option value="other">Other</option>
-                                </select>
-                                <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
-                                    <i data-feather="filter" class="h-3 w-3 text-gray-custom"></i>
-                                </div>
-                            </div>
-                            <button id="sort-expenses-btn" class="text-gray-custom p-1 rounded-md flex items-center hover:bg-gray-100 transition-colors">
-                                <i data-feather="arrow-down" class="h-4 w-4"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div id="expenses-container" class="divide-y divide-gray-100 max-h-96 overflow-y-auto">
-                            <!-- No expenses message -->
-                            <div id="no-expenses-message" class="text-center py-12">
-                                <div class="inline-block p-4 bg-primary-light rounded-full mb-4">
-                                    <i data-feather="dollar-sign" class="h-6 w-6 text-primary"></i>
-                                </div>
-                                <h4 class="text-lg font-medium font-heading text-gray-dark mb-2">No expenses yet</h4>
-                                <p class="text-gray-custom text-sm max-w-xs mx-auto">Add your first expense to track your spending and see your budget breakdown.</p>
-                            </div>
-                            
-                            <!-- Expense items will be added here dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="app-footer py-8 mt-12">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <div class="flex items-center justify-center md:justify-start">
-                        <div class="bg-gray-700 p-2 rounded-full mr-3">
-                            <i data-feather="map" class="h-5 w-5 text-white"></i>
+                <div class="package" data-aos="fade-up" data-aos-delay="200">
+                    <div class="package-img">
+                        <img src="images/package-2.jpg" alt="Paris Explorer">
+                        <div class="package-price">$1,299</div>
+                    </div>
+                    <div class="package-content">
+                        <h3>Paris Explorer</h3>
+                        <div class="package-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.9 (215 reviews)</span>
                         </div>
-                        <h2 class="text-xl font-bold font-heading">TravelBudget</h2>
+                        <p>Discover the romance and charm of the City of Lights with guided tours and local experiences.</p>
+                        <div class="package-features">
+                            <span><i class="fas fa-clock"></i> 5 Days</span>
+                            <span><i class="fas fa-user-friends"></i> 2 People</span>
+                            <span><i class="fas fa-hotel"></i> Boutique Hotel</span>
+                        </div>
+                        <a href="#" class="btn btn-outline">View Details</a>
                     </div>
-                    <p class="mt-2 text-gray-400 text-sm">Plan your adventure wisely</p>
                 </div>
-                <div class="flex flex-col items-center md:items-end">
-                    <div class="flex space-x-4 mb-3">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i data-feather="github" class="h-5 w-5"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i data-feather="twitter" class="h-5 w-5"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                            <i data-feather="instagram" class="h-5 w-5"></i>
-                        </a>
+
+                <div class="package" data-aos="fade-up" data-aos-delay="300">
+                    <div class="package-img">
+                        <img src="images/package-3.jpg" alt="Japanese Adventure">
+                        <div class="package-price">$1,599</div>
                     </div>
-                    <p class="text-gray-400 text-sm">© 2023 TravelBudget. All rights reserved.</p>
+                    <div class="package-content">
+                        <h3>Japanese Adventure</h3>
+                        <div class="package-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.8 (176 reviews)</span>
+                        </div>
+                        <p>Explore the fascinating blend of ancient tradition and modern innovation across Japan.</p>
+                        <div class="package-features">
+                            <span><i class="fas fa-clock"></i> 10 Days</span>
+                            <span><i class="fas fa-user-friends"></i> 2 People</span>
+                            <span><i class="fas fa-hotel"></i> Mixed Accommodations</span>
+                        </div>
+                        <a href="#" class="btn btn-outline">View Details</a>
+                    </div>
                 </div>
+
+                <div class="package" data-aos="fade-up" data-aos-delay="400">
+                    <div class="package-img">
+                        <img src="images/package-4.jpg" alt="Greek Island Hopping">
+                        <div class="package-price">$1,499</div>
+                    </div>
+                    <div class="package-content">
+                        <h3>Greek Island Hopping</h3>
+                        <div class="package-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.6 (143 reviews)</span>
+                        </div>
+                        <p>Sail the Aegean Sea and discover the stunning beauty and rich history of the Greek Islands.</p>
+                        <div class="package-features">
+                            <span><i class="fas fa-clock"></i> 8 Days</span>
+                            <span><i class="fas fa-user-friends"></i> 2 People</span>
+                            <span><i class="fas fa-hotel"></i> Island Hotels</span>
+                        </div>
+                        <a href="#" class="btn btn-outline">View Details</a>
+                    </div>
+                </div>
+
+                <div class="package" data-aos="fade-up" data-aos-delay="500">
+                    <div class="package-img">
+                        <img src="images/package-5.jpg" alt="African Safari">
+                        <div class="package-price">$2,199</div>
+                    </div>
+                    <div class="package-content">
+                        <h3>African Safari</h3>
+                        <div class="package-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>4.9 (98 reviews)</span>
+                        </div>
+                        <p>Embark on the adventure of a lifetime with guided wildlife safaris and luxury camping.</p>
+                        <div class="package-features">
+                            <span><i class="fas fa-clock"></i> 7 Days</span>
+                            <span><i class="fas fa-user-friends"></i> 2 People</span>
+                            <span><i class="fas fa-hotel"></i> Luxury Camps</span>
+                        </div>
+                        <a href="#" class="btn btn-outline">View Details</a>
+                    </div>
+                </div>
+
+                <div class="package" data-aos="fade-up" data-aos-delay="600">
+                    <div class="package-img">
+                        <img src="images/package-6.jpg" alt="New York City Break">
+                        <div class="package-price">$1,099</div>
+                    </div>
+                    <div class="package-content">
+                        <h3>New York City Break</h3>
+                        <div class="package-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7 (185 reviews)</span>
+                        </div>
+                        <p>Experience the energy and excitement of the Big Apple with this premium city package.</p>
+                        <div class="package-features">
+                            <span><i class="fas fa-clock"></i> 5 Days</span>
+                            <span><i class="fas fa-user-friends"></i> 2 People</span>
+                            <span><i class="fas fa-hotel"></i> 4-Star Hotel</span>
+                        </div>
+                        <a href="#" class="btn btn-outline">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Travelers Say</h2>
+                <p>Real experiences from our satisfied customers</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="images/testimonial-1.jpg" alt="Sarah Johnson">
+                    </div>
+                    <div class="testimonial-content">
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"TravelEase made planning our honeymoon so simple. Everything was perfectly organized, and we had the most amazing time in Bali. Highly recommend!"</p>
+                        <h4>Sarah Johnson</h4>
+                        <span>Bali Paradise Package</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get exclusive deals, travel tips, and more delivered to your inbox</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your Email Address">
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>TravelEase</span>
+                    </a>
+                    <p>Making travel planning simple and enjoyable.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="packages.html">Packages</a></li>
+                            <li><a href="blog.html">Travel Blog</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Top Destinations</h3>
+                        <ul>
+                            <li><a href="#">Bali, Indonesia</a></li>
+                            <li><a href="#">Paris, France</a></li>
+                            <li><a href="#">Tokyo, Japan</a></li>
+                            <li><a href="#">Santorini, Greece</a></li>
+                            <li><a href="#">New York, USA</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Cancellation Policy</a></li>
+                            <li><a href="#">Customer Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+                <p class="copyright">© 2023 TravelEase. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Confirmation Modal -->
-    <div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden backdrop-blur-sm">
-        <div class="bg-white rounded-xl shadow-lg max-w-md w-full p-0 transform transition-all scale-95 opacity-0 modal-content">
-            <div class="p-5 border-b border-gray-100">
-                <div class="flex justify-between items-center">
-                    <h3 id="modal-title" class="text-lg font-bold font-heading text-gray-dark">Confirm Action</h3>
-                    <button id="modal-close" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100">
-                        <i data-feather="x" class="h-5 w-5"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="p-6">
-                <div class="flex items-start mb-5">
-                    <div class="bg-red-50 p-3 rounded-full mr-4 flex-shrink-0">
-                        <i data-feather="alert-triangle" class="h-6 w-6 text-danger"></i>
-                    </div>
-                    <p id="modal-message" class="text-gray-600">Are you sure you want to proceed with this action?</p>
-                </div>
-            </div>
-            <div class="p-4 bg-gray-50 rounded-b-xl flex justify-end space-x-3">
-                <button id="modal-cancel" class="btn btn-outline">Cancel</button>
-                <button id="modal-confirm" class="btn btn-danger">Confirm</button>
-            </div>
-        </div>
-    </div>
-    
-    <style>
-        /* Modal animation */
-        #confirm-modal.active .modal-content {
-            transform: scale(1);
-            opacity: 1;
-        }
-        
-        #confirm-modal .modal-content {
-            transition: all 0.3s ease-out;
-        }
-    </style>
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
 
     <!-- Scripts -->
-    <script src="js/storage.js"></script>
-    <script src="js/budgetCalculator.js"></script>
-    <script src="js/chart.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
-    <script>
-        // Initialize Feather icons
-        feather.replace();
-    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

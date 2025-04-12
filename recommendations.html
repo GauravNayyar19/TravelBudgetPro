@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Recommendations - TravelEase</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Additional styles for the recommendations page */
+        .filter-bar {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 4rem;
+        }
+        
+        .filter-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .recommendation-card {
+            position: relative;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .recommendation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .recommendation-image {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .recommendation-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .recommendation-card:hover .recommendation-image img {
+            transform: scale(1.1);
+        }
+        
+        .recommendation-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 1.2rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .recommendation-content {
+            padding: 2rem;
+        }
+        
+        .recommendation-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .recommendation-meta {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            color: var(--text-medium);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            margin-right: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+        
+        .meta-item i {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+        
+        .recommendation-description {
+            margin-bottom: 2rem;
+            color: var(--text-medium);
+            font-size: 1.5rem;
+        }
+        
+        .destination-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .destination-tag {
+            background-color: var(--light-bg);
+            color: var(--text-medium);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 1.2rem;
+            margin-right: 0.8rem;
+            margin-bottom: 0.8rem;
+            transition: var(--transition);
+        }
+        
+        .destination-tag:hover {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+        }
+        
+        .recommendation-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .recommendation-price {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .recommendation-price span {
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--text-medium);
+        }
+        
+        .recommendation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .recommendation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Category Filter Tabs */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .category-tab {
+            padding: 1.2rem 2.4rem;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .category-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .category-tab:hover,
+        .category-tab.active {
+            color: var(--primary-color);
+        }
+        
+        .category-tab.active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>TravelEase</span>
+                    </a>
+                </div>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="recommendations.html" class="active">Recommendations</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <a href="profile.html" class="profile-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>My Profile</span>
+                    </a>
+                </div>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner" style="background-color: var(--primary-color);">
+        <div class="container">
+            <div class="banner-content">
+                <h1>Travel Recommendations</h1>
+                <p>Discover your next dream destination</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-bar">
+                <form class="filter-form">
+                    <div class="form-group">
+                        <label for="filter-destination">Destination</label>
+                        <input type="text" id="filter-destination" name="destination" placeholder="Where to?">
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-budget">Budget</label>
+                        <select id="filter-budget" name="budget">
+                            <option value="">Any Budget</option>
+                            <option value="budget">Budget Friendly (Under $1000)</option>
+                            <option value="mid-range">Mid-Range ($1000-$3000)</option>
+                            <option value="luxury">Luxury ($3000+)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-duration">Duration</label>
+                        <select id="filter-duration" name="duration">
+                            <option value="">Any Duration</option>
+                            <option value="weekend">Weekend Getaway (1-3 days)</option>
+                            <option value="short">Short Trip (4-7 days)</option>
+                            <option value="extended">Extended Trip (8-14 days)</option>
+                            <option value="long">Long Journey (15+ days)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-type">Travel Type</label>
+                        <select id="filter-type" name="type">
+                            <option value="">Any Type</option>
+                            <option value="adventure">Adventure</option>
+                            <option value="beach">Beach</option>
+                            <option value="city">City Break</option>
+                            <option value="cultural">Cultural</option>
+                            <option value="nature">Nature & Wildlife</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-filter"></i>
+                        Apply Filters
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <section class="recommendations-section">
+        <div class="container">
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">All Destinations</div>
+                <div class="category-tab" data-category="trending">Trending</div>
+                <div class="category-tab" data-category="beach">Beach Getaways</div>
+                <div class="category-tab" data-category="adventure">Adventure</div>
+                <div class="category-tab" data-category="city">City Breaks</div>
+                <div class="category-tab" data-category="cultural">Cultural Trips</div>
+            </div>
+            
+            <div class="recommendation-grid">
+                <!-- Recommendation Card 1 -->
+                <div class="recommendation-card" data-category="trending beach">
+                    <div class="recommendation-image">
+                        <img src="images/recommend-1.jpg" alt="Maldives Beach Resort">
+                        <div class="recommendation-badge">Trending</div>
+                    </div>
+                    <div class="recommendation-content">
+                        <h3 class="recommendation-title">Maldives Beach Resort</h3>
+                        <div class="recommendation-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Maldives</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>7 Days</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.9 (289 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="recommendation-description">Experience paradise on Earth with crystal clear waters, white sandy beaches, and luxury overwater bungalows.</p>
+                        <div class="destination-tags">
+                            <span class="destination-tag">Beaches</span>
+                            <span class="destination-tag">Luxury</span>
+                            <span class="destination-tag">Romance</span>
+                            <span class="destination-tag">Water Activities</span>
+                        </div>
+                        <div class="recommendation-actions">
+                            <div class="recommendation-price">
+                                $2,499 <span>per person</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommendation Card 2 -->
+                <div class="recommendation-card" data-category="city cultural">
+                    <div class="recommendation-image">
+                        <img src="images/recommend-2.jpg" alt="Rome City Explorer">
+                    </div>
+                    <div class="recommendation-content">
+                        <h3 class="recommendation-title">Rome City Explorer</h3>
+                        <div class="recommendation-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Italy</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>5 Days</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.7 (156 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="recommendation-description">Discover the eternal city's rich history, remarkable architecture, and world-renowned cuisine.</p>
+                        <div class="destination-tags">
+                            <span class="destination-tag">Historical</span>
+                            <span class="destination-tag">City</span>
+                            <span class="destination-tag">Food</span>
+                            <span class="destination-tag">Art</span>
+                        </div>
+                        <div class="recommendation-actions">
+                            <div class="recommendation-price">
+                                $1,299 <span>per person</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommendation Card 3 -->
+                <div class="recommendation-card" data-category="adventure nature">
+                    <div class="recommendation-image">
+                        <img src="images/recommend-3.jpg" alt="Costa Rica Adventure">
+                        <div class="recommendation-badge">Popular</div>
+                    </div>
+                    <div class="recommendation-content">
+                        <h3 class="recommendation-title">Costa Rica Adventure</h3>
+                        <div class="recommendation-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Costa Rica</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>10 Days</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.8 (203 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="recommendation-description">Experience thrilling adventures in lush rainforests, volcano hikes, wildlife encounters, and relaxing beaches.</p>
+                        <div class="destination-tags">
+                            <span class="destination-tag">Adventure</span>
+                            <span class="destination-tag">Nature</span>
+                            <span class="destination-tag">Wildlife</span>
+                            <span class="destination-tag">Eco-Tourism</span>
+                        </div>
+                        <div class="recommendation-actions">
+                            <div class="recommendation-price">
+                                $1,799 <span>per person</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommendation Card 4 -->
+                <div class="recommendation-card" data-category="cultural trending">
+                    <div class="recommendation-image">
+                        <img src="images/recommend-4.jpg" alt="Kyoto Cultural Tour">
+                        <div class="recommendation-badge">Best Value</div>
+                    </div>
+                    <div class="recommendation-content">
+                        <h3 class="recommendation-title">Kyoto Cultural Tour</h3>
+                        <div class="recommendation-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Japan</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>8 Days</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.9 (178 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="recommendation-description">Immerse yourself in Japanese culture with traditional tea ceremonies, temple visits, and enchanting garden tours.</p>
+                        <div class="destination-tags">
+                            <span class="destination-tag">Cultural</span>
+                            <span class="destination-tag">Historical</span>
+                            <span class="destination-tag">Temples</span>
+                            <span class="destination-tag">Gardens</span>
+                        </div>
+                        <div class="recommendation-actions">
+                            <div class="recommendation-price">
+                                $2,099 <span>per person</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommendation Card 5 -->
+                <div class="recommendation-card" data-category="beach nature">
+                    <div class="recommendation-image">
+                        <img src="images/recommend-5.jpg" alt="Phuket Island Escape">
+                    </div>
+                    <div class="recommendation-content">
+                        <h3 class="recommendation-title">Phuket Island Escape</h3>
+                        <div class="recommendation-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Thailand</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>6 Days</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.6 (215 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="recommendation-description">Relax on stunning beaches, explore limestone karsts, and enjoy vibrant nightlife in this tropical paradise.</p>
+                        <div class="destination-tags">
+                            <span class="destination-tag">Islands</span>
+                            <span class="destination-tag">Beaches</span>
+                            <span class="destination-tag">Water Sports</span>
+                            <span class="destination-tag">Nightlife</span>
+                        </div>
+                        <div class="recommendation-actions">
+                            <div class="recommendation-price">
+                                $999 <span>per person</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommendation Card 6 -->
+                <div class="recommendation-card" data-category="adventure nature">
+                    <div class="recommendation-image">
+                        <img src="images/recommend-6.jpg" alt="New Zealand Explorer">
+                        <div class="recommendation-badge">Adventure</div>
+                    </div>
+                    <div class="recommendation-content">
+                        <h3 class="recommendation-title">New Zealand Explorer</h3>
+                        <div class="recommendation-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>New Zealand</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>14 Days</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.9 (243 reviews)</span>
+                            </div>
+                        </div>
+                        <p class="recommendation-description">Experience the ultimate adventure with breathtaking landscapes, bungee jumping, hiking, and scenic fjords.</p>
+                        <div class="destination-tags">
+                            <span class="destination-tag">Adventure</span>
+                            <span class="destination-tag">Nature</span>
+                            <span class="destination-tag">Hiking</span>
+                            <span class="destination-tag">Extreme Sports</span>
+                        </div>
+                        <div class="recommendation-actions">
+                            <div class="recommendation-price">
+                                $3,299 <span>per person</span>
+                            </div>
+                            <a href="#" class="btn btn-outline">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Get Personalized Recommendations</h2>
+                <p>Subscribe to our newsletter for tailored travel suggestions based on your preferences</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your Email Address">
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>TravelEase</span>
+                    </a>
+                    <p>Making travel planning simple and enjoyable.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="packages.html">Packages</a></li>
+                            <li><a href="blog.html">Travel Blog</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Top Destinations</h3>
+                        <ul>
+                            <li><a href="#">Bali, Indonesia</a></li>
+                            <li><a href="#">Paris, France</a></li>
+                            <li><a href="#">Tokyo, Japan</a></li>
+                            <li><a href="#">Santorini, Greece</a></li>
+                            <li><a href="#">New York, USA</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Cancellation Policy</a></li>
+                            <li><a href="#">Customer Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+                <p class="copyright">© 2023 TravelEase. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category tabs functionality
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const recommendationCards = document.querySelectorAll('.recommendation-card');
+            
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Get category filter
+                    const category = tab.dataset.category;
+                    
+                    // Filter recommendation cards
+                    recommendationCards.forEach(card => {
+                        if (category === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            if (card.dataset.category.includes(category)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Filter form functionality
+            const filterForm = document.querySelector('.filter-form');
+            if (filterForm) {
+                filterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get filter values
+                    const destination = document.getElementById('filter-destination').value.toLowerCase();
+                    const budget = document.getElementById('filter-budget').value;
+                    const duration = document.getElementById('filter-duration').value;
+                    const type = document.getElementById('filter-type').value;
+                    
+                    // Alert for demonstration
+                    alert(`Filters applied: Destination: ${destination || 'Any'}, Budget: ${budget || 'Any'}, Duration: ${duration || 'Any'}, Type: ${type || 'Any'}`);
+                    
+                    // In a real application, you would filter the recommendations based on these values
+                    // For this demo, we'll reset the form
+                    this.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

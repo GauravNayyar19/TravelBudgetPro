@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Placeholder Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .image-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            max-width: 100%;
+            height: auto;
+        }
+        h2 {
+            margin-top: 40px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .download-all {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Generator for TravelEase Website</h1>
+    <p>This page generates placeholder images for the TravelEase travel planner website. Click on individual buttons to download images or use the "Download All" button at the bottom.</p>
+    
+    <h2>Hero Carousel Images</h2>
+    <div class="gallery" id="hero-images">
+        <!-- Hero images will be generated here -->
+    </div>
+    
+    <h2>Package Images</h2>
+    <div class="gallery" id="package-images">
+        <!-- Package images will be generated here -->
+    </div>
+    
+    <h2>Testimonial Images</h2>
+    <div class="gallery" id="testimonial-images">
+        <!-- Testimonial images will be generated here -->
+    </div>
+    
+    <button class="download-all" id="download-all">Download All Images</button>
+    
+    <script>
+        // Define locations for hero images
+        const heroLocations = [
+            { name: "Mountain Landscape", color: "#3498db", icon: "🏔️" },
+            { name: "Beach Sunset", color: "#e67e22", icon: "🏖️" },
+            { name: "City Skyline", color: "#34495e", icon: "🏙️" },
+            { name: "Tropical Island", color: "#27ae60", icon: "🌴" }
+        ];
+        
+        // Define destinations for package images
+        const packageDestinations = [
+            { name: "Bali Paradise", color: "#1abc9c", icon: "🌺" },
+            { name: "Paris Explorer", color: "#9b59b6", icon: "🗼" },
+            { name: "Japanese Adventure", color: "#e74c3c", icon: "🏯" },
+            { name: "Greek Island Hopping", color: "#3498db", icon: "🏛️" },
+            { name: "African Safari", color: "#f39c12", icon: "🦁" },
+            { name: "New York City Break", color: "#34495e", icon: "🗽" }
+        ];
+        
+        // Function to create a canvas placeholder image
+        function createPlaceholderImage(width, height, bgColor, text, icon = null, fontSize = 30) {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Add a pattern
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            for (let i = 0; i < width; i += 40) {
+                for (let j = 0; j < height; j += 40) {
+                    ctx.fillRect(i, j, 20, 20);
+                }
+            }
+            
+            // Text and icon
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.font = `${fontSize}px Arial`;
+            
+            if (icon) {
+                ctx.font = `${fontSize * 2}px Arial`;
+                ctx.fillText(icon, width / 2, height / 2 - 30);
+                ctx.font = `${fontSize}px Arial`;
+                ctx.fillText(text, width / 2, height / 2 + 30);
+            } else {
+                ctx.fillText(text, width / 2, height / 2);
+            }
+            
+            return canvas;
+        }
+        
+        // Function to create download button for an image
+        function createDownloadButton(canvas, filename) {
+            const button = document.createElement('button');
+            button.textContent = `Download ${filename}`;
+            button.addEventListener('click', () => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = canvas.toDataURL('image/jpeg', 0.8);
+                link.click();
+            });
+            return button;
+        }
+        
+        // Generate hero images
+        const heroContainer = document.getElementById('hero-images');
+        const heroCanvases = [];
+        
+        heroLocations.forEach((location, index) => {
+            const container = document.createElement('div');
+            container.className = 'image-container';
+            
+            const canvas = createPlaceholderImage(1200, 800, location.color, location.name, location.icon, 36);
+            heroCanvases.push({ canvas, filename: `hero-${index + 1}.jpg` });
+            
+            container.appendChild(canvas);
+            container.appendChild(createDownloadButton(canvas, `hero-${index + 1}.jpg`));
+            heroContainer.appendChild(container);
+        });
+        
+        // Generate package images
+        const packageContainer = document.getElementById('package-images');
+        const packageCanvases = [];
+        
+        packageDestinations.forEach((destination, index) => {
+            const container = document.createElement('div');
+            container.className = 'image-container';
+            
+            const canvas = createPlaceholderImage(800, 500, destination.color, destination.name, destination.icon, 28);
+            packageCanvases.push({ canvas, filename: `package-${index + 1}.jpg` });
+            
+            container.appendChild(canvas);
+            container.appendChild(createDownloadButton(canvas, `package-${index + 1}.jpg`));
+            packageContainer.appendChild(container);
+        });
+        
+        // Generate testimonial images
+        const testimonialContainer = document.getElementById('testimonial-images');
+        const testimonialCanvases = [];
+        
+        const canvas = createPlaceholderImage(400, 400, '#8e44ad', 'Traveler', '😊', 28);
+        testimonialCanvases.push({ canvas, filename: 'testimonial-1.jpg' });
+        
+        const container = document.createElement('div');
+        container.className = 'image-container';
+        container.appendChild(canvas);
+        container.appendChild(createDownloadButton(canvas, 'testimonial-1.jpg'));
+        testimonialContainer.appendChild(container);
+        
+        // Download all button functionality
+        document.getElementById('download-all').addEventListener('click', () => {
+            const allCanvases = [...heroCanvases, ...packageCanvases, ...testimonialCanvases];
+            const zipLinks = allCanvases.map(({ canvas, filename }) => {
+                return {
+                    filename: filename,
+                    href: canvas.toDataURL('image/jpeg', 0.8)
+                };
+            });
+            
+            // Since we can't create actual ZIP files in the browser without additional libraries,
+            // we'll just download them one by one with a slight delay
+            zipLinks.forEach((link, index) => {
+                setTimeout(() => {
+                    const a = document.createElement('a');
+                    a.download = link.filename;
+                    a.href = link.href;
+                    a.click();
+                }, index * 300);
+            });
+            
+            alert(`Downloading ${zipLinks.length} images. Please check your downloads folder.`);
+        });
+    </script>
+</body>
+</html>
