@@ -61,66 +61,102 @@ const UI = {
         trips.forEach(trip => {
             const tripStatus = BudgetCalculator.getTripStatus(trip);
             const statusClass = {
-                'upcoming': 'bg-blue-100 text-blue-800',
-                'ongoing': 'bg-green-100 text-green-800',
-                'past': 'bg-gray-100 text-gray-800'
+                'upcoming': 'category-badge bg-blue-100 text-blue-800',
+                'ongoing': 'category-badge bg-green-100 text-green-800',
+                'past': 'category-badge bg-gray-100 text-gray-800'
+            }[tripStatus];
+            
+            const statusIcon = {
+                'upcoming': 'calendar',
+                'ongoing': 'check-circle',
+                'past': 'check'
             }[tripStatus];
             
             const statusText = {
                 'upcoming': 'Upcoming',
-                'ongoing': 'Ongoing',
-                'past': 'Past'
+                'ongoing': 'Active',
+                'past': 'Completed'
             }[tripStatus];
             
             const dateRange = BudgetCalculator.getDateRangeText(trip);
+            const totalExpenses = BudgetCalculator.calculateTotalExpenses(trip);
             const remainingBudget = BudgetCalculator.calculateRemainingBudget(trip);
             const formattedRemaining = BudgetCalculator.formatCurrency(remainingBudget, trip.currency);
             const budgetProgress = BudgetCalculator.calculateBudgetProgress(trip);
             const isOverBudget = BudgetCalculator.isOverBudget(trip);
             
-            const progressBarClass = isOverBudget ? 'bg-travel-red' : 'bg-travel-blue';
+            // Determine the card highlight color based on trip status
+            let cardHighlightClass = '';
+            if (tripStatus === 'ongoing') {
+                cardHighlightClass = 'border-l-4 border-success';
+            } else if (tripStatus === 'upcoming') {
+                cardHighlightClass = 'border-l-4 border-primary';
+            }
+            
+            // Determine progress bar class
+            const progressBarClass = isOverBudget ? 'bg-danger' : 'bg-primary';
             
             const tripCard = document.createElement('div');
-            tripCard.className = 'trip-card bg-white rounded-lg shadow-sm overflow-hidden';
+            tripCard.className = `card mb-5 trip-card overflow-hidden ${cardHighlightClass}`;
             tripCard.innerHTML = `
                 <div class="p-5">
-                    <div class="flex justify-between items-start mb-3">
+                    <div class="flex justify-between items-start mb-4">
                         <div>
-                            <h3 class="font-bold text-gray-800 text-lg mb-1">${trip.name}</h3>
-                            <p class="text-gray-600 text-sm">${trip.destination}</p>
+                            <h3 class="text-xl font-bold font-heading text-gray-dark mb-1">${trip.name}</h3>
+                            <p class="text-gray-custom text-sm">${trip.destination}</p>
                         </div>
-                        <span class="px-2 py-1 rounded-full text-xs font-medium ${statusClass}">${statusText}</span>
+                        <span class="${statusClass}">
+                            <i data-feather="${statusIcon}" class="h-3 w-3 mr-1"></i>
+                            ${statusText}
+                        </span>
                     </div>
                     
-                    <div class="text-sm text-gray-600 mb-3">
-                        <div class="flex items-center mb-1">
-                            <i data-feather="calendar" class="h-4 w-4 mr-2"></i>
-                            ${dateRange}
+                    <div class="grid grid-cols-2 gap-4 mb-5">
+                        <div class="flex items-center">
+                            <div class="bg-gray-100 p-2 rounded-full mr-3">
+                                <i data-feather="calendar" class="h-4 w-4 text-gray-custom"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-custom mb-1">Date Range</p>
+                                <p class="text-sm font-medium">${dateRange}</p>
+                            </div>
                         </div>
                         <div class="flex items-center">
-                            <i data-feather="dollar-sign" class="h-4 w-4 mr-2"></i>
-                            ${BudgetCalculator.formatCurrency(trip.budget, trip.currency)} budget
+                            <div class="bg-gray-100 p-2 rounded-full mr-3">
+                                <i data-feather="dollar-sign" class="h-4 w-4 text-gray-custom"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-custom mb-1">Total Budget</p>
+                                <p class="text-sm font-medium">${BudgetCalculator.formatCurrency(trip.budget, trip.currency)}</p>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="mb-2">
-                        <div class="flex justify-between items-center text-sm mb-1">
-                            <span>Budget Used</span>
-                            <span class="${isOverBudget ? 'text-travel-red' : ''}">${Math.round(budgetProgress)}%</span>
+                    <div class="mb-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-sm text-gray-custom">Budget Used</p>
+                            <p class="text-sm font-medium ${isOverBudget ? 'text-danger' : ''}">${Math.round(budgetProgress)}%</p>
                         </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="${progressBarClass} h-2 rounded-full animate-progress" style="--target-width: ${Math.min(budgetProgress, 100)}%"></div>
+                        <div class="progress-container">
+                            <div class="progress-bar ${progressBarClass} animate-progress" style="width: ${Math.min(budgetProgress, 100)}%"></div>
                         </div>
                     </div>
                     
-                    <div class="flex justify-between items-center text-sm">
-                        <span>Remaining</span>
-                        <span class="${isOverBudget ? 'text-travel-red font-semibold' : 'text-travel-green font-semibold'}">${formattedRemaining}</span>
+                    <div class="grid grid-cols-2 gap-4 mb-5">
+                        <div>
+                            <p class="text-xs text-gray-custom mb-1">Spent</p>
+                            <p class="text-sm font-medium">${BudgetCalculator.formatCurrency(totalExpenses, trip.currency)}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-custom mb-1">Remaining</p>
+                            <p class="text-sm font-medium ${isOverBudget ? 'text-danger' : 'text-success'}">${formattedRemaining}</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="px-5 py-3 bg-gray-50 border-t border-gray-100">
-                    <button class="view-trip-btn w-full py-2 text-center text-travel-blue hover:bg-gray-100 rounded transition" data-trip-id="${trip.id}">
+                <div class="p-3 border-t border-gray-100 bg-gray-50 flex justify-end">
+                    <button class="view-trip-btn btn btn-outline btn-sm" data-trip-id="${trip.id}">
+                        <i data-feather="eye" class="h-4 w-4 mr-2"></i>
                         View Details
                     </button>
                 </div>
@@ -186,8 +222,28 @@ const UI = {
         document.getElementById('new-trip-section').classList.add('hidden');
         document.getElementById('trip-details-section').classList.remove('hidden');
         
-        // Set trip title
+        // Set trip title and destination
         document.getElementById('trip-details-title').textContent = trip.name;
+        document.getElementById('trip-details-destination').textContent = trip.destination;
+        
+        // Set date range
+        const dateRange = BudgetCalculator.getDateRangeText(trip);
+        document.getElementById('trip-date-range').textContent = dateRange;
+        
+        // Set trip status badge
+        const tripStatus = BudgetCalculator.getTripStatus(trip);
+        const statusBadge = document.getElementById('trip-status-badge');
+        
+        if (tripStatus === 'upcoming') {
+            statusBadge.className = 'category-badge bg-blue-100 text-blue-800';
+            statusBadge.innerHTML = '<i data-feather="calendar" class="h-3 w-3 mr-1"></i> Upcoming';
+        } else if (tripStatus === 'ongoing') {
+            statusBadge.className = 'category-badge bg-green-100 text-green-800';
+            statusBadge.innerHTML = '<i data-feather="check-circle" class="h-3 w-3 mr-1"></i> Active';
+        } else {
+            statusBadge.className = 'category-badge bg-gray-100 text-gray-800';
+            statusBadge.innerHTML = '<i data-feather="check" class="h-3 w-3 mr-1"></i> Completed';
+        }
         
         // Set budget information
         const totalBudget = BudgetCalculator.formatCurrency(trip.budget, trip.currency);
@@ -203,19 +259,35 @@ const UI = {
         // Set budget progress
         const progress = BudgetCalculator.calculateBudgetProgress(trip);
         document.getElementById('trip-budget-progress').style.width = `${Math.min(progress, 100)}%`;
+        document.getElementById('budget-percentage').textContent = `${Math.round(progress)}%`;
         
         // If over budget, change color
         if (BudgetCalculator.isOverBudget(trip)) {
-            document.getElementById('trip-budget-progress').classList.remove('bg-travel-blue');
-            document.getElementById('trip-budget-progress').classList.add('bg-travel-red');
-            document.getElementById('trip-remaining-budget').classList.remove('text-travel-green');
-            document.getElementById('trip-remaining-budget').classList.add('text-travel-red');
+            document.getElementById('trip-budget-progress').classList.remove('bg-primary');
+            document.getElementById('trip-budget-progress').classList.add('bg-danger');
+            document.getElementById('trip-remaining-budget').classList.remove('text-success');
+            document.getElementById('trip-remaining-budget').classList.add('text-danger');
+            document.getElementById('budget-percentage').classList.add('text-danger');
         } else {
-            document.getElementById('trip-budget-progress').classList.remove('bg-travel-red');
-            document.getElementById('trip-budget-progress').classList.add('bg-travel-blue');
-            document.getElementById('trip-remaining-budget').classList.remove('text-travel-red');
-            document.getElementById('trip-remaining-budget').classList.add('text-travel-green');
+            document.getElementById('trip-budget-progress').classList.remove('bg-danger');
+            document.getElementById('trip-budget-progress').classList.add('bg-primary');
+            document.getElementById('trip-remaining-budget').classList.remove('text-danger');
+            document.getElementById('trip-remaining-budget').classList.add('text-success');
+            document.getElementById('budget-percentage').classList.remove('text-danger');
         }
+        
+        // Setup currency symbol for expense form
+        const currencySymbol = {
+            'USD': '$',
+            'EUR': '€',
+            'GBP': '£',
+            'JPY': '¥',
+            'CAD': 'CA$',
+            'AUD': 'A$',
+            'INR': '₹'
+        }[trip.currency] || trip.currency;
+        
+        document.getElementById('expense-currency-symbol').textContent = currencySymbol;
         
         // Display expenses
         this.displayExpenses(tripId);
@@ -229,6 +301,9 @@ const UI = {
         document.getElementById('expense-date').value = today >= tripStart ? today : tripStart;
         document.getElementById('expense-date').min = tripStart;
         document.getElementById('expense-date').max = trip.endDate;
+        
+        // Refresh feather icons
+        feather.replace();
     },
     
     /**
@@ -266,27 +341,47 @@ const UI = {
         // Create expense items
         expenses.forEach(expense => {
             const expenseItem = document.createElement('div');
-            expenseItem.className = 'expense-item p-3 border border-gray-100 rounded-md flex justify-between items-center';
+            expenseItem.className = 'expense-item p-4 hover:bg-gray-50 transition-colors';
             
             // Get category display info
             const categoryInfo = this.getCategoryInfo(expense.category);
             
+            // Format the date
+            const expenseDate = new Date(expense.date);
+            const formattedDate = expenseDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: expenseDate.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+            });
+            
             expenseItem.innerHTML = `
-                <div>
-                    <div class="flex items-center mb-1">
-                        <span class="category-badge ${categoryInfo.class} mr-2">
-                            <i data-feather="${categoryInfo.icon}" class="h-3 w-3 mr-1"></i>
-                            ${categoryInfo.label}
-                        </span>
-                        <span class="text-sm text-gray-500">${new Date(expense.date).toLocaleDateString()}</span>
+                <div class="flex items-start">
+                    <div class="mr-4 mt-1">
+                        <div class="p-2 rounded-full ${categoryInfo.class}">
+                            <i data-feather="${categoryInfo.icon}" class="h-4 w-4"></i>
+                        </div>
                     </div>
-                    <p class="font-medium">${expense.name}</p>
-                </div>
-                <div class="flex items-center">
-                    <span class="font-bold text-gray-800 mr-3">${BudgetCalculator.formatCurrency(expense.amount, trip.currency)}</span>
-                    <button class="delete-expense-btn text-gray-400 hover:text-travel-red" data-expense-id="${expense.id}">
-                        <i data-feather="trash-2" class="h-4 w-4"></i>
-                    </button>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-medium text-gray-dark">${expense.name}</h4>
+                                <div class="flex items-center mt-1">
+                                    <span class="text-sm text-gray-custom flex items-center">
+                                        <i data-feather="calendar" class="h-3 w-3 mr-1"></i>
+                                        ${formattedDate}
+                                    </span>
+                                    <span class="mx-2 text-gray-300">•</span>
+                                    <span class="text-sm text-gray-custom">${categoryInfo.label}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="font-bold text-gray-dark mr-4">${BudgetCalculator.formatCurrency(expense.amount, trip.currency)}</span>
+                                <button class="delete-expense-btn p-1 text-gray-custom hover:text-danger transition-colors rounded-full hover:bg-red-50" data-expense-id="${expense.id}" aria-label="Delete expense">
+                                    <i data-feather="trash-2" class="h-4 w-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `;
             
@@ -297,7 +392,7 @@ const UI = {
             deleteBtn.addEventListener('click', () => {
                 this.showModal(
                     'Delete Expense',
-                    'Are you sure you want to delete this expense?',
+                    'Are you sure you want to delete this expense? This action cannot be undone.',
                     'Delete',
                     'expense-delete'
                 );
@@ -419,14 +514,32 @@ const UI = {
         document.getElementById('modal-confirm').dataset.action = actionType;
         
         // Show modal
-        document.getElementById('confirm-modal').classList.remove('hidden');
+        const modal = document.getElementById('confirm-modal');
+        modal.classList.remove('hidden');
+        
+        // Add animation class after a small delay (allows transition to work)
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 10);
+        
+        // Set up close button if not already set
+        if (!modal._closeInitialized) {
+            document.getElementById('modal-close').addEventListener('click', this.hideModal.bind(this));
+            modal._closeInitialized = true;
+        }
     },
     
     /**
      * Hide the confirmation modal
      */
     hideModal() {
-        document.getElementById('confirm-modal').classList.add('hidden');
+        const modal = document.getElementById('confirm-modal');
+        modal.classList.remove('active');
+        
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
     },
     
     /**
