@@ -1,0 +1,155 @@
+/* Custom CSS for Travel Budget Planner */
+
+/* Add smooth scrolling to the whole page */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Category colors and badges */
+.category-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.category-accommodation {
+    background-color: #E3F2FD;
+    color: #1E88E5;
+}
+
+.category-food {
+    background-color: #FFF8E1;
+    color: #FFB300;
+}
+
+.category-transportation {
+    background-color: #E8F5E9;
+    color: #43A047;
+}
+
+.category-activities {
+    background-color: #F3E5F5;
+    color: #8E24AA;
+}
+
+.category-shopping {
+    background-color: #FFEBEE;
+    color: #E53935;
+}
+
+.category-other {
+    background-color: #ECEFF1;
+    color: #546E7A;
+}
+
+/* Trip card hover effects */
+.trip-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.trip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom focus styles */
+input:focus, select:focus, button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
+}
+
+/* Expense item hover effect */
+.expense-item {
+    transition: background-color 0.2s ease;
+}
+
+.expense-item:hover {
+    background-color: #f9fafb;
+}
+
+/* Button hover effects */
+.btn-hover-scale {
+    transition: transform 0.2s ease;
+}
+
+.btn-hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Date range display */
+.date-range {
+    display: inline-flex;
+    align-items: center;
+    color: #78909C;
+    font-size: 0.875rem;
+}
+
+.date-range svg {
+    margin: 0 0.25rem;
+}
+
+/* Currency symbol */
+.currency-display {
+    position: relative;
+}
+
+.currency-display input {
+    padding-left: 1.5rem;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #78909C;
+}
+
+/* Progress bar animation */
+@keyframes progressFill {
+    from { width: 0; }
+    to { width: var(--target-width); }
+}
+
+.animate-progress {
+    animation: progressFill 1s ease-out forwards;
+}
