@@ -1,9 +1,4 @@
-/**
- * TravelEase - Custom CSS
- * Extra styling for enhanced visual effects
- */
 
-/* Loading Animation Styles */
 .loading-overlay {
     position: fixed;
     top: 0;
@@ -40,7 +35,6 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Error message styles */
 .error-message {
     background-color: var(--error);
     color: white;
@@ -51,7 +45,6 @@
     animation: fadeIn 0.3s ease;
 }
 
-/* Newsletter success message */
 .newsletter-success {
     background-color: var(--success);
     color: white;
@@ -62,25 +55,21 @@
     animation: fadeIn 0.3s ease;
 }
 
-/* Input error state */
 input.error, select.error {
     border-color: var(--error) !important;
     animation: shake 0.5s ease-in-out;
 }
 
-/* Shake animation for error inputs */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     20%, 60% { transform: translateX(-5px); }
     40%, 80% { transform: translateX(5px); }
 }
 
-/* Enhanced hover effect for packages */
 .package.package-hover {
     transform: translateY(-15px) !important;
 }
 
-/* Pulse animation for CTA buttons */
 .btn-primary {
     position: relative;
     overflow: hidden;
@@ -111,7 +100,6 @@ input.error, select.error {
     100% { transform: scale(2); opacity: 0; }
 }
 
-/* Enhanced page transitions */
 .page-transition {
     animation: fadeSlideUp 0.5s ease;
 }
@@ -127,19 +115,16 @@ input.error, select.error {
     }
 }
 
-/* Hover effect for destination cards */
 .destination-card:hover .destination-content h3 {
     color: var(--primary-color);
 }
 
-/* Staggered animation for grid items */
 .staggered-fade-in {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-/* Enhanced scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -157,7 +142,6 @@ input.error, select.error {
     background-color: var(--primary-dark);
 }
 
-/* Image hover zoom effect */
 .zoom-hover {
     overflow: hidden;
 }
@@ -170,7 +154,6 @@ input.error, select.error {
     transform: scale(1.1);
 }
 
-/* Separator styles */
 .separator {
     width: 5rem;
     height: 3px;
@@ -178,7 +161,6 @@ input.error, select.error {
     margin: 1.5rem auto;
 }
 
-/* Badge styles */
 .badge {
     display: inline-block;
     padding: 0.4rem 1rem;
@@ -202,7 +184,6 @@ input.error, select.error {
     color: var(--text-dark);
 }
 
-/* Custom styling for banner content */
 .page-banner {
     position: relative;
     overflow: hidden;

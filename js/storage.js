@@ -1,22 +1,13 @@
-/**
- * Storage module
- * Handles all localStorage operations for the application
- */
+
 
 const Storage = {
-    /**
-     * Key used for storing trips in localStorage
-     */
+   
     TRIPS_STORAGE_KEY: 'travelBudgetTrips',
     
-    /**
-     * Key used for storing current trip ID in localStorage
-     */
     CURRENT_TRIP_KEY: 'travelBudgetCurrentTrip',
     
     /**
-     * Get all trips from localStorage
-     * @returns {Array} Array of trip objects
+     * @returns {Array}
      */
     getTrips() {
         const tripsJson = localStorage.getItem(this.TRIPS_STORAGE_KEY);
@@ -24,16 +15,14 @@ const Storage = {
     },
     
     /**
-     * Save trips to localStorage
-     * @param {Array} trips - Array of trip objects
+     * @param {Array} trips
      */
     saveTrips(trips) {
         localStorage.setItem(this.TRIPS_STORAGE_KEY, JSON.stringify(trips));
     },
     
     /**
-     * Add a new trip to localStorage
-     * @param {Object} trip - The trip object to add
+     * @param {Object} trip 
      */
     addTrip(trip) {
         const trips = this.getTrips();
@@ -42,9 +31,8 @@ const Storage = {
     },
     
     /**
-     * Get a trip by ID
-     * @param {string} tripId - The ID of the trip to retrieve
-     * @returns {Object|null} The trip object or null if not found
+     * @param {string} tripId 
+     * @returns {Object|null} 
      */
     getTripById(tripId) {
         const trips = this.getTrips();
@@ -52,10 +40,9 @@ const Storage = {
     },
     
     /**
-     * Update a trip
-     * @param {string} tripId - The ID of the trip to update
-     * @param {Object} updatedTrip - The updated trip object
-     * @returns {boolean} True if update successful, false otherwise
+     * @param {string} tripId
+     * @param {Object} updatedTrip 
+     * @returns {boolean} 
      */
     updateTrip(tripId, updatedTrip) {
         const trips = this.getTrips();
@@ -71,21 +58,19 @@ const Storage = {
     },
     
     /**
-     * Delete a trip
-     * @param {string} tripId - The ID of the trip to delete
-     * @returns {boolean} True if deletion successful, false otherwise
+     * @param {string} tripId 
+     * @returns {boolean} 
      */
     deleteTrip(tripId) {
         const trips = this.getTrips();
         const filteredTrips = trips.filter(trip => trip.id !== tripId);
         
         if (filteredTrips.length === trips.length) {
-            return false; // No trip was removed
+            return false; 
         }
         
         this.saveTrips(filteredTrips);
         
-        // If the deleted trip was the current trip, clear current trip
         if (this.getCurrentTripId() === tripId) {
             this.clearCurrentTrip();
         }
@@ -94,10 +79,9 @@ const Storage = {
     },
     
     /**
-     * Add an expense to a trip
-     * @param {string} tripId - The ID of the trip to add the expense to
-     * @param {Object} expense - The expense object to add
-     * @returns {boolean} True if addition successful, false otherwise
+     * @param {string} tripId 
+     * @param {Object} expense 
+     * @returns {boolean} 
      */
     addExpense(tripId, expense) {
         const trip = this.getTripById(tripId);
@@ -106,7 +90,6 @@ const Storage = {
             return false;
         }
         
-        // Initialize expenses array if it doesn't exist
         if (!trip.expenses) {
             trip.expenses = [];
         }
@@ -116,11 +99,10 @@ const Storage = {
     },
     
     /**
-     * Update an expense
-     * @param {string} tripId - The ID of the trip containing the expense
-     * @param {string} expenseId - The ID of the expense to update
-     * @param {Object} updatedExpense - The updated expense object
-     * @returns {boolean} True if update successful, false otherwise
+     * @param {string} tripId 
+     * @param {string} expenseId 
+     * @param {Object} updatedExpense 
+     * @returns {boolean} 
      */
     updateExpense(tripId, expenseId, updatedExpense) {
         const trip = this.getTripById(tripId);
@@ -140,10 +122,9 @@ const Storage = {
     },
     
     /**
-     * Delete an expense
-     * @param {string} tripId - The ID of the trip containing the expense
-     * @param {string} expenseId - The ID of the expense to delete
-     * @returns {boolean} True if deletion successful, false otherwise
+     * @param {string} tripId 
+     * @param {string} expenseId 
+     * @returns {boolean} 
      */
     deleteExpense(tripId, expenseId) {
         const trip = this.getTripById(tripId);
@@ -156,16 +137,15 @@ const Storage = {
         trip.expenses = trip.expenses.filter(expense => expense.id !== expenseId);
         
         if (trip.expenses.length === originalLength) {
-            return false; // No expense was removed
+            return false; 
         }
         
         return this.updateTrip(tripId, trip);
     },
     
     /**
-     * Get all expenses for a trip
-     * @param {string} tripId - The ID of the trip
-     * @returns {Array} Array of expense objects
+     * @param {string} tripId 
+     * @returns {Array} 
      */
     getExpenses(tripId) {
         const trip = this.getTripById(tripId);
@@ -173,10 +153,9 @@ const Storage = {
     },
     
     /**
-     * Get expenses filtered by category
-     * @param {string} tripId - The ID of the trip
-     * @param {string} category - The category to filter by, or 'all' for all categories
-     * @returns {Array} Array of filtered expense objects
+     * @param {string} tripId
+     * @param {string} category 
+     * @returns {Array}
      */
     getExpensesByCategory(tripId, category) {
         const expenses = this.getExpenses(tripId);
@@ -189,33 +168,27 @@ const Storage = {
     },
     
     /**
-     * Save the current trip ID
-     * @param {string} tripId - The ID of the current trip
+     * @param {string} tripId 
      */
     setCurrentTrip(tripId) {
         localStorage.setItem(this.CURRENT_TRIP_KEY, tripId);
     },
     
     /**
-     * Get the current trip ID
-     * @returns {string|null} The current trip ID or null if not set
+     * @returns {string|null} 
      */
     getCurrentTripId() {
         return localStorage.getItem(this.CURRENT_TRIP_KEY);
     },
-    
-    /**
-     * Clear the current trip ID
-     */
+
     clearCurrentTrip() {
         localStorage.removeItem(this.CURRENT_TRIP_KEY);
     },
     
     /**
-     * Sort trips by creation date
-     * @param {Array} trips - Array of trip objects
-     * @param {string} order - 'newest' or 'oldest'
-     * @returns {Array} Sorted array of trip objects
+     * @param {Array} trips 
+     * @param {string} order 
+     * @returns {Array} 
      */
     sortTripsByDate(trips, order = 'newest') {
         return [...trips].sort((a, b) => {
@@ -227,10 +200,9 @@ const Storage = {
     },
     
     /**
-     * Sort expenses by date
-     * @param {Array} expenses - Array of expense objects
-     * @param {string} order - 'newest' or 'oldest'
-     * @returns {Array} Sorted array of expense objects
+     * @param {Array} expenses 
+     * @param {string} order
+     * @returns {Array} 
      */
     sortExpensesByDate(expenses, order = 'newest') {
         return [...expenses].sort((a, b) => {

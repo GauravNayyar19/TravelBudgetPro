@@ -63,21 +63,18 @@
     <div class="gallery" id="team-gallery"></div>
     
     <script>
-        // Helper function to create canvas with gradient background and text
         function createPlaceholderImage(width, height, title, gradient1, gradient2, fontSize = 30) {
             const canvas = document.createElement('canvas');
             canvas.width = width;
             canvas.height = height;
             const ctx = canvas.getContext('2d');
             
-            // Create gradient
             const gradient = ctx.createLinearGradient(0, 0, width, height);
             gradient.addColorStop(0, gradient1);
             gradient.addColorStop(1, gradient2);
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, width, height);
             
-            // Add some decorative elements
             ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
             for (let i = 0; i < width; i += 50) {
                 for (let j = 0; j < height; j += 50) {
@@ -87,7 +84,6 @@
                 }
             }
             
-            // Add title text
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
@@ -98,14 +94,12 @@
             ctx.shadowOffsetY = 2;
             ctx.fillText(title, width / 2, height / 2);
             
-            // Add travel icon
             ctx.font = `${fontSize * 1.5}px Arial`;
             ctx.fillText('✈️', width / 2, height / 2 - fontSize * 1.5);
             
             return canvas;
         }
         
-        // Create hero images
         const heroDestinations = [
             { name: 'Mountain Landscape', color1: '#1e3c72', color2: '#2a5298' },
             { name: 'Beach Sunset', color1: '#ff512f', color2: '#dd2476' },
@@ -133,7 +127,6 @@
             heroGallery.appendChild(div);
         });
         
-        // Create package images
         const packageDestinations = [
             { name: 'Bali Paradise', color1: '#11998e', color2: '#38ef7d' },
             { name: 'Paris Explorer', color1: '#8E2DE2', color2: '#4A00E0' },
@@ -163,7 +156,6 @@
             packageGallery.appendChild(div);
         });
         
-        // Create recommendation images
         const recommendationDestinations = [
             { name: 'Maldives Resort', color1: '#00b4db', color2: '#0083b0' },
             { name: 'Rome Explorer', color1: '#f83600', color2: '#f9d423' },
@@ -193,7 +185,6 @@
             recommendationGallery.appendChild(div);
         });
         
-        // Create team images
         const teamMembers = [
             { name: 'Team Photo', color1: '#4568DC', color2: '#B06AB3' },
             { name: 'Sarah Johnson', color1: '#3494E6', color2: '#EC6EAD' },
@@ -203,7 +194,6 @@
         
         const teamGallery = document.getElementById('team-gallery');
         
-        // First add about-team.jpg
         const teamCanvas = createPlaceholderImage(800, 400, 'Our Team', teamMembers[0].color1, teamMembers[0].color2, 40);
         const teamDiv = document.createElement('div');
         teamDiv.className = 'image-item';
@@ -221,7 +211,6 @@
         teamDiv.appendChild(teamButton);
         teamGallery.appendChild(teamDiv);
         
-        // Add team member images
         for (let i = 1; i < teamMembers.length; i++) {
             const canvas = createPlaceholderImage(400, 400, teamMembers[i].name, teamMembers[i].color1, teamMembers[i].color2, 25);
             const div = document.createElement('div');

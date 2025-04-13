@@ -1,9 +1,4 @@
-/* 
-* TravelEase - Travel Planner Website
-* Main Stylesheet
-*/
 
-/* ---------- Reset & Base Styles ---------- */
 :root {
     --primary-color: #ff5722;
     --primary-dark: #e64a19;
@@ -38,7 +33,7 @@
 }
 
 html {
-    font-size: 62.5%; /* 10px = 1rem */
+    font-size: 62.5%;
     scroll-behavior: smooth;
 }
 
@@ -78,7 +73,6 @@ button {
     cursor: pointer;
 }
 
-/* ---------- Layout & Container ---------- */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -106,7 +100,6 @@ button {
     margin: 0 auto;
 }
 
-/* ---------- Buttons & Links ---------- */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -160,7 +153,6 @@ button {
     box-shadow: var(--shadow-lg);
 }
 
-/* ---------- Header ---------- */
 .header {
     background-color: var(--white);
     box-shadow: var(--shadow-sm);
@@ -253,7 +245,6 @@ button {
     color: var(--text-dark);
 }
 
-/* ---------- Hero Carousel ---------- */
 .hero-carousel {
     height: 100vh;
     position: relative;
@@ -380,7 +371,6 @@ button {
     transform: scale(1.2);
 }
 
-/* ---------- Trip Planner ---------- */
 .trip-planner {
     padding: 8rem 0;
     background-color: var(--white);
@@ -441,7 +431,6 @@ button {
     box-shadow: 0 0 0 2px var(--primary-light);
 }
 
-/* ---------- Popular Packages ---------- */
 .popular-packages {
     padding: 8rem 0;
     background-color: var(--light-bg);
@@ -553,7 +542,6 @@ button {
     margin-right: 0.6rem;
 }
 
-/* ---------- Testimonials ---------- */
 .testimonials {
     padding: 8rem 0;
     background-color: var(--white);
@@ -617,7 +605,6 @@ button {
     color: var(--text-medium);
 }
 
-/* ---------- Newsletter ---------- */
 .newsletter {
     padding: 6rem 0;
     background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
@@ -669,7 +656,6 @@ button {
     background-color: #ffb300;
 }
 
-/* ---------- Footer ---------- */
 .footer {
     background-color: var(--dark-bg);
     color: var(--white);
@@ -770,7 +756,6 @@ button {
     text-align: center;
 }
 
-/* ---------- Back to Top Button ---------- */
 .back-to-top {
     position: fixed;
     bottom: 3rem;
@@ -801,7 +786,6 @@ button {
     transform: translateY(-5px);
 }
 
-/* ---------- Animations ---------- */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -813,7 +797,6 @@ button {
     }
 }
 
-/* AOS Animation Classes */
 [data-aos="fade-up"] {
     opacity: 0;
     transform: translateY(20px);
@@ -825,7 +808,6 @@ button {
     transform: translateY(0);
 }
 
-/* ---------- Top Destinations Styles ---------- */
 .top-destinations {
     padding: 8rem 0;
     background-color: var(--white);
@@ -928,10 +910,9 @@ button {
     margin-right: 0.5rem;
 }
 
-/* ---------- Responsive Design ---------- */
 @media (max-width: 1200px) {
     html {
-        font-size: 56.25%; /* 9px = 1rem */
+        font-size: 56.25%; 
     }
 
     .packages-container {
@@ -978,7 +959,7 @@ button {
 
 @media (max-width: 768px) {
     html {
-        font-size: 50%; /* 8px = 1rem */
+        font-size: 50%; 
     }
 
     .header-content {

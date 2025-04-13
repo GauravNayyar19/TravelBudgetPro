@@ -45,33 +45,27 @@
             const canvas = document.getElementById('iconCanvas');
             const ctx = canvas.getContext('2d');
             
-            // Draw background
             const gradient = ctx.createLinearGradient(0, 0, 64, 64);
             gradient.addColorStop(0, '#ff5722');
             gradient.addColorStop(1, '#e64a19');
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, 64, 64);
             
-            // Add plane icon
             ctx.fillStyle = 'white';
             ctx.font = '32px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText('✈', 32, 32);
             
-            // Add circular border
             ctx.strokeStyle = 'white';
             ctx.lineWidth = 3;
             ctx.beginPath();
             ctx.arc(32, 32, 28, 0, Math.PI * 2);
             ctx.stroke();
             
-            // Download button
             document.getElementById('downloadBtn').addEventListener('click', function() {
-                // Convert to PNG
                 const image = canvas.toDataURL('image/png');
                 
-                // Create download link
                 const link = document.createElement('a');
                 link.href = image;
                 link.download = 'favicon.png';

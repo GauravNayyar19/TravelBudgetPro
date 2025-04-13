@@ -1,15 +1,10 @@
-/**
- * TravelEase - Travel Planner Website
- * Main JavaScript File
- */
+
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize CSS variables for dynamic styling
     const root = document.documentElement;
     root.style.setProperty('--primary-color-rgb', '255, 87, 34'); // Matches #ff5722
     root.style.setProperty('--primary-dark-rgb', '230, 74, 25');  // Matches #e64a19
     
-    // Initialize AOS (Animate On Scroll) if available
     if(typeof AOS !== 'undefined') {
         AOS.init({
             duration: 800,
@@ -19,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Header scroll effect
     const header = document.querySelector('.header');
     window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
@@ -31,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
     
@@ -44,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Hero Carousel
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.dot');
     const prevBtn = document.querySelector('.carousel-prev');
@@ -52,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentSlide = 0;
     let slideInterval;
 
-    // Function to change slide
     function changeSlide(n) {
         slides[currentSlide].classList.remove('active');
         dots[currentSlide].classList.remove('active');
@@ -63,27 +54,22 @@ document.addEventListener('DOMContentLoaded', function() {
         dots[currentSlide].classList.add('active');
     }
 
-    // Next slide
     function nextSlide() {
         changeSlide(currentSlide + 1);
     }
 
-    // Previous slide
     function prevSlide() {
         changeSlide(currentSlide - 1);
     }
 
-    // Start automatic slideshow
     function startSlideshow() {
         slideInterval = setInterval(nextSlide, 5000);
     }
 
-    // Stop automatic slideshow
     function stopSlideshow() {
         clearInterval(slideInterval);
     }
 
-    // Event listeners for carousel controls
     if (prevBtn && nextBtn) {
         prevBtn.addEventListener('click', function() {
             prevSlide();
@@ -98,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Event listeners for dots
     dots.forEach(function(dot, index) {
         dot.addEventListener('click', function() {
             changeSlide(index);
@@ -107,10 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Start the slideshow
     startSlideshow();
 
-    // Trip Planner Form Validation
     const plannerForm = document.querySelector('.planner-form');
     if (plannerForm) {
         plannerForm.addEventListener('submit', function(e) {
@@ -126,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Validate dates
             const start = new Date(startDate);
             const end = new Date(endDate);
             const today = new Date();
@@ -142,14 +124,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // If everything is valid, you would normally submit the form or process the data
-            // For now, just show a success message
             alert('Your trip planning request has been submitted successfully! We will find the best options for you.');
             this.reset();
         });
     }
 
-    // Initialize date inputs with today and tomorrow
     const startDateInput = document.getElementById('start-date');
     const endDateInput = document.getElementById('end-date');
     
@@ -161,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
         startDateInput.valueAsDate = today;
         endDateInput.valueAsDate = tomorrow;
         
-        // Ensure end date is always after start date
         startDateInput.addEventListener('change', function() {
             const startDate = new Date(this.value);
             const endDate = new Date(endDateInput.value);
@@ -174,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Back to top button
     const backToTopBtn = document.querySelector('.back-to-top');
     
     window.addEventListener('scroll', function() {
@@ -190,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Animation for packages
     const packages = document.querySelectorAll('.package');
     
     function checkVisibility() {
@@ -209,11 +185,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Check visibility on load and scroll
     checkVisibility();
     window.addEventListener('scroll', checkVisibility);
     
-    // Destination cards hover effects
     const destinationCards = document.querySelectorAll('.destination-card');
     
     destinationCards.forEach(function(card) {
@@ -232,7 +206,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Newsletter form submission
     const newsletterForm = document.querySelector('.newsletter-form');
     
     if (newsletterForm) {
@@ -245,29 +218,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Validate email format
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(emailInput.value)) {
                 alert('Please enter a valid email address.');
                 return;
             }
             
-            // Here you would normally send the email to the server
             alert('Thank you for subscribing to our newsletter!');
             this.reset();
         });
     }
 
-    // Currency formatter for budget input
     const budgetInput = document.getElementById('budget');
     if (budgetInput) {
         budgetInput.addEventListener('focus', function() {
-            // Remove any non-numeric characters when focused
             this.value = this.value.replace(/[^0-9.]/g, '');
         });
         
         budgetInput.addEventListener('blur', function() {
-            // Format as currency when blurred
             if (this.value) {
                 const value = parseFloat(this.value);
                 if (!isNaN(value)) {
@@ -280,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         budgetInput.addEventListener('input', function() {
-            // Allow only numbers and decimal point
             this.value = this.value.replace(/[^0-9.]/g, '');
         });
     }
