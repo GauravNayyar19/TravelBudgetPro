@@ -637,6 +637,7 @@ button {
 }
 
 .newsletter-form input {
+    background-color: var(--white);
     flex: 1;
     padding: 1.6rem 2rem;
     font-size: 1.6rem;
